@@ -13,5 +13,5 @@ window.JSB_CONFIG = {
   DIAS_ADELANTE: 21,     // cuántos días se muestran para reservar
   FIDELIDAD_CADA: 5,     // cada 5 cortes, el siguiente es gratis
   DIAS_RECUPERAR: 30,    // clientes que no vienen hace más de estos días
-  DEMO_KEY: 'latinos-demo-v1'
+  DEMO_KEY: 'latinos-demo-v2'
 };
