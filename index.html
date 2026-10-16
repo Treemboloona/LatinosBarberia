@@ -324,6 +324,10 @@ footer a{color:var(--muted)}
             .bk-opt small { display: block; color: var(--muted); font-size: 13px; }
             .bk-opt .p { font-family: var(--fd); font-size: 18px; white-space: nowrap; }
             .bk-opt[aria-pressed="true"] { border-color: var(--gold); background: var(--bg-3); }
+            .bk-barb { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+            .bk-chip { background: var(--bg-2); border: 1px solid var(--line); color: var(--text); padding: 8px 14px; border-radius: 999px; cursor: pointer; font: 700 14px var(--fb); }
+            .bk-chip[aria-pressed="true"] { background: var(--cream); color: var(--ink); border-color: var(--cream); }
+            .bk-chip:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
             .bk-days { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
             .bk-day { flex: 0 0 auto; min-width: 64px; background: var(--bg-2); border: 1px solid var(--line); color: var(--text); padding: 8px 10px; text-align: center; cursor: pointer; font: inherit; }
             .bk-day b { display: block; font-family: var(--fd); font-size: 20px; font-weight: 500; }
@@ -363,7 +367,8 @@ footer a{color:var(--muted)}
                         <div class="bk-svc" id="bk-svc"><p class="bk-empty">Cargando servicios…</p></div>
                     </div>
                     <div class="bk-step" id="bk-s2" hidden>
-                        <h3>2. Día</h3>
+                        <h3>2. Barbero y día</h3>
+                        <div class="bk-barb" id="bk-barb"></div>
                         <div class="bk-days" id="bk-days"></div>
                     </div>
                     <div class="bk-step" id="bk-s3" hidden>
@@ -388,7 +393,7 @@ footer a{color:var(--muted)}
             const { api, T, money, slotsFor, DEMO } = window.JSB;
             const $ = id => document.getElementById(id);
             const dlg = $('bk');
-            const st = { svc: null, day: null, time: null, servicios: [], horarios: [] };
+            const st = { svc: null, barb: null, day: null, time: null, servicios: [], horarios: [], barberos: [] };
             if (DEMO) $('bk-demo').hidden = false;
 
             function press(container, btn) {
@@ -398,7 +403,7 @@ footer a{color:var(--muted)}
             async function open(preId, preDay, preTime) {
                 if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
                 try {
-                    [st.servicios, st.horarios] = await Promise.all([api.servicios(), api.horarios()]);
+                    [st.servicios, st.horarios, st.barberos] = await Promise.all([api.servicios(), api.horarios(), api.barberos()]);
                     if (preId) { st.svc = st.servicios.find(s => String(s.id) === String(preId)) || null; }
                     renderSvc(); if (st.svc) renderDays();
                     if (st.svc && preDay) { st.day = preDay; renderDays(); await renderTimes(); const tb = [...$('bk-times').querySelectorAll('.bk-time')].find(x => x.textContent === preTime); if (tb) tb.click(); }
@@ -406,6 +411,8 @@ footer a{color:var(--muted)}
                     $('bk-svc').innerHTML = `<p class="bk-err">No pudimos cargar los turnos. Escribinos por WhatsApp al ${window.JSB_CONFIG.WHATSAPP_TXT}.</p>`;
                 }
             }
+
+            function barbNombre() { const b = st.barberos.find(x => String(x.id) === String(st.barb)); return b ? 'con ' + b.nombre : 'con el barbero que esté libre'; }
 
             function renderSvc() {
                 const box = $('bk-svc'); box.innerHTML = '';
@@ -423,6 +430,14 @@ footer a{color:var(--muted)}
 
             function renderDays() {
                 $('bk-s2').hidden = false; $('bk-s3').hidden = true; $('bk-s4').hidden = true;
+                const bb = $('bk-barb'); bb.innerHTML = ''; bb.hidden = st.barberos.length < 2;
+                [{ id: null, nombre: 'Cualquiera' }, ...st.barberos].forEach(x => {
+                    const c = document.createElement('button');
+                    c.type = 'button'; c.className = 'bk-chip'; c.textContent = x.nombre;
+                    c.setAttribute('aria-pressed', String(st.barb) === String(x.id));
+                    c.onclick = () => { st.barb = x.id; st.time = null; press(bb, c); if (st.day) renderTimes(); };
+                    bb.appendChild(c);
+                });
                 const box = $('bk-days'); box.innerHTML = '';
                 let first = null;
                 for (let i = 0; i < window.JSB_CONFIG.DIAS_ADELANTE; i++) {
@@ -448,7 +463,7 @@ footer a{color:var(--muted)}
                 const desde = T.at(st.day, '00:00'), hasta = T.at(T.addDays(st.day, 1), '00:00');
                 let ocup = [];
                 try { ocup = await api.ocupados(desde, hasta); } catch (e) { box.innerHTML = '<p class="bk-err">No pudimos ver los horarios. Probá de nuevo.</p>'; return; }
-                const libres = slotsFor(st.day, st.svc.duracion_min, st.horarios, ocup);
+                const libres = slotsFor(st.day, st.svc.duracion_min, st.horarios, ocup, st.barberos, st.barb);
                 box.innerHTML = '';
                 if (!libres.length) { box.innerHTML = '<p class="bk-empty">No quedan horarios para este día. Probá con otro.</p>'; return; }
                 libres.forEach(hm => {
@@ -464,7 +479,7 @@ footer a{color:var(--muted)}
                 const d = T.at(st.day, st.time);
                 $('bk-sum').innerHTML = `<b></b><br><span></span>`;
                 $('bk-sum').querySelector('b').textContent = `${st.svc.nombre} · ${money(st.svc.precio)}`;
-                $('bk-sum').querySelector('span').textContent = `${T.long(d)} a las ${st.time} h`;
+                $('bk-sum').querySelector('span').textContent = `${T.long(d)} a las ${st.time} h · ${barbNombre()}`;
                 f.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 $('bk-nombre').focus({ preventScroll: true });
             }
@@ -477,7 +492,7 @@ footer a{color:var(--muted)}
                 if (tel.replace(/\D/g, '').length < 8) { err.textContent = 'Poné un WhatsApp válido, con código de área.'; err.hidden = false; return; }
                 const btn = $('bk-submit'); btn.disabled = true; btn.textContent = 'Reservando…';
                 try {
-                    await api.crearTurno({ servicio_id: st.svc.id, inicio: T.at(st.day, st.time), nombre, tel, nota: $('bk-nota').value });
+                    await api.crearTurno({ servicio_id: st.svc.id, inicio: T.at(st.day, st.time), nombre, tel, nota: $('bk-nota').value, barbero_id: st.barb });
                     showOk(nombre);
                 } catch (e) {
                     err.textContent = e.message || 'No se pudo reservar. Probá con otro horario.'; err.hidden = false;
@@ -487,7 +502,7 @@ footer a{color:var(--muted)}
 
             function showOk(nombre) {
                 const d = T.at(st.day, st.time);
-                const resumen = `${st.svc.nombre}, ${T.long(d)} a las ${st.time} h`;
+                const resumen = `${st.svc.nombre}, ${T.long(d)} a las ${st.time} h ${barbNombre()}`;
                 $('bk-body').innerHTML = `<div class="bk-ok"><div class="check" aria-hidden="true">✓</div><h3>Turno reservado</h3><p></p><p>${window.JSB_CONFIG.DIRECCION}, Comodoro Rivadavia. Si no podés venir, avisanos por WhatsApp al ${window.JSB_CONFIG.WHATSAPP_TXT}.</p><p>Cuando vengas, sumás un sello en tu Tarjeta Latinos.</p><button class="btn btn-line" type="button" id="bk-done">Listo</button></div>`;
                 $('bk-body').querySelector('.bk-ok p').textContent = `Gracias ${nombre}. Te esperamos: ${resumen}.`;
                 $('bk-done').onclick = () => { location.hash = ''; location.reload(); };
@@ -534,13 +549,13 @@ footer a{color:var(--muted)}
       return `<div class="${d === hoyDow ? 'today' : ''}"><span>${DIAS[d]}${d === hoyDow ? ' · hoy' : ''}</span><span>${txt}</span></div>`;
     }).join('');
 
-    const ss = await api.servicios();
+    const [ss, bs] = await Promise.all([api.servicios(), api.barberos()]);
     const base = ss.find(s => s.reservable);
     if (!base) return;
     for (let i = 0; i < 7; i++) {
       const ymd = T.addDays(T.today(), i);
       const oc = await api.ocupados(T.at(ymd, '00:00'), T.at(T.addDays(ymd, 1), '00:00'));
-      const libres = slotsFor(ymd, base.duracion_min, hs, oc);
+      const libres = slotsFor(ymd, base.duracion_min, hs, oc, bs);
       if (!libres.length) continue;
       const d = T.at(ymd, '12:00');
       const cuando = i === 0 ? 'Hoy' : i === 1 ? 'Mañana' : T.long(d).replace(/^./, c => c.toUpperCase());
