@@ -26,8 +26,17 @@
   };
   const money = n => '$' + Number(n || 0).toLocaleString('es-AR');
 
-  // Horarios libres de un día para una duración dada
-  function slotsFor(ymd, durMin, horarios, ocupados) {
+  // ¿Qué barbero (de la lista) está libre entre s y e? Los ocupados sin barbero_id son bloqueos para todos.
+  function barberoLibre(s, e, ocupados, candidatos) {
+    const choca = o => new Date(o.inicio) < e && new Date(o.fin) > s;
+    if (ocupados.some(o => (o.barbero_id === null || o.barbero_id === undefined) && choca(o))) return undefined;
+    if (!candidatos.length) return null;
+    return candidatos.find(id => !ocupados.some(o => String(o.barbero_id) === String(id) && choca(o)));
+  }
+
+  // Horarios libres de un día para una duración dada (barberoId vacío = cualquiera)
+  function slotsFor(ymd, durMin, horarios, ocupados, barberos, barberoId) {
+    const cand = barberoId ? [barberoId] : (barberos || []).map(b => b.id);
     const h = horarios.find(x => Number(x.dia) === T.dow(ymd));
     if (!h || !h.abre || !h.cierra) return [];
     const open = T.toMin(String(h.abre).slice(0, 5)), close = T.toMin(String(h.cierra).slice(0, 5));
@@ -36,8 +45,7 @@
     for (let m = open; m + durMin <= close; m += C.INTERVALO_MIN) {
       const s = T.at(ymd, T.fromMin(m)), e = new Date(s.getTime() + durMin * 60000);
       if (s.getTime() < minStart) continue;
-      const choca = ocupados.some(o => new Date(o.inicio) < e && new Date(o.fin) > s);
-      if (!choca) out.push(T.fromMin(m));
+      if (barberoLibre(s, e, ocupados, cand) !== undefined) out.push(T.fromMin(m));
     }
     return out;
   }
@@ -55,11 +63,15 @@
         { id: 5, nombre: 'Corte niño', categoria: 'Cortes', precio: 12000, duracion_min: 30, nota: 'Hasta 12 años.', reservable: true, activo: true, orden: 5 },
         { id: 6, nombre: 'Diseño / freestyle', categoria: 'Extras', precio: 3000, duracion_min: 15, nota: 'Líneas y detalles, se suma al corte.', reservable: true, activo: true, orden: 6 }
       ];
+      const barberos = [
+        { id: 1, nombre: 'Barbero 1', comision: 50, activo: true, orden: 1 },
+        { id: 2, nombre: 'Barbero 2', comision: 50, activo: true, orden: 2 }
+      ];
       const horarios = [0, 1, 2, 3, 4, 5, 6].map(d => ({ dia: d, abre: d === 0 ? null : '11:00', cierra: d === 0 ? null : '20:00' }));
       let n = 0;
-      const mk = (ymd, hm, sid, nombre, tel, estado) => {
+      const mk = (ymd, hm, sid, nombre, tel, estado, bid) => {
         const s = servicios.find(x => x.id === sid), i = T.at(ymd, hm);
-        return { id: 'demo-' + (++n), created_at: i.toISOString(), servicio_id: sid, servicio_nombre: s.nombre, precio: s.precio,
+        return { id: 'demo-' + (++n), created_at: i.toISOString(), servicio_id: sid, barbero_id: bid || 1, servicio_nombre: s.nombre, precio: s.precio,
           inicio: i.toISOString(), fin: new Date(i.getTime() + s.duracion_min * 60000).toISOString(),
           cliente_nombre: nombre + ' (ejemplo)', cliente_tel: tel, nota: null, estado };
       };
@@ -75,28 +87,28 @@
       habituales.forEach(([nom, tel, sid, cada, visitas], k) => {
         for (let v = 0; v < visitas; v++) {
           let ymd = T.addDays(hoy, -2 - k - v * cada); if (!abierto(ymd)) ymd = T.addDays(ymd, -1);
-          turnos.push(mk(ymd, horas[(k + v) % horas.length], sid, nom, tel, 'asistio'));
+          turnos.push(mk(ymd, horas[(k + v) % horas.length], sid, nom, tel, 'asistio', (k + v) % 3 === 0 ? 2 : 1));
         }
       });
       // Clientes que hace rato no vienen
       [['Joaquín', '297 400-7777', 2, -48], ['Agus', '297 400-8888', 1, -39]].forEach(([nom, tel, sid, d]) => {
-        const ymd = T.addDays(hoy, d); turnos.push(mk(abierto(ymd) ? ymd : T.addDays(ymd, 1), '16:00', sid, nom, tel, 'asistio'));
+        const ymd = T.addDays(hoy, d); turnos.push(mk(abierto(ymd) ? ymd : T.addDays(ymd, 1), '16:00', sid, nom, tel, 'asistio', 2));
       });
-      turnos.push(mk(T.addDays(hoy, -3), '19:00', 4, 'Dylan', '297 400-9999', 'no_vino'));
+      turnos.push(mk(T.addDays(hoy, -3), '19:00', 4, 'Dylan', '297 400-9999', 'no_vino', 2));
       // Agenda de hoy y mañana
       const man = abierto(T.addDays(hoy, 1)) ? T.addDays(hoy, 1) : T.addDays(hoy, 2);
       if (abierto(hoy)) {
         turnos.push(mk(hoy, '11:00', 1, 'Martín', '297 400-1111', 'asistio'));
-        turnos.push(mk(hoy, '15:30', 3, 'Lucas', '297 400-2222', 'confirmado'));
+        turnos.push(mk(hoy, '15:30', 3, 'Lucas', '297 400-2222', 'confirmado', 2));
         turnos.push(mk(hoy, '18:00', 2, 'Franco', '297 400-4444', 'pendiente'));
       }
       turnos.push(mk(man, '12:00', 2, 'Tomás', '297 400-3333', 'confirmado'));
-      turnos.push(mk(man, '16:30', 3, 'Brian', '297 400-6666', 'pendiente'));
+      turnos.push(mk(man, '16:30', 3, 'Brian', '297 400-6666', 'pendiente', 2));
       turnos.push(mk(man, '19:00', 5, 'Nico', '297 400-5555', 'pendiente'));
-      return { servicios, horarios, turnos, bloqueos: [], avisos: {}, seq: 1000 };
+      return { barberos, servicios, horarios, turnos, bloqueos: [], avisos: {}, seq: 1000 };
     };
     let db;
-    const load = () => { try { db = JSON.parse(localStorage.getItem(KEY)); } catch (e) { db = null; } if (!db) { db = seed(); save(); } };
+    const load = () => { try { db = JSON.parse(localStorage.getItem(KEY)); } catch (e) { db = null; } if (!db || !db.barberos) { db = seed(); save(); } };
     const save = () => { try { localStorage.setItem(KEY, JSON.stringify(db)); } catch (e) {} };
     load();
     const listeners = [];
@@ -105,19 +117,22 @@
       const antes = new Set(db.turnos.map(t => t.id)); load();
       db.turnos.filter(t => !antes.has(t.id)).forEach(t => listeners.forEach(cb => cb(t)));
     });
-    const ocupados = (d, h) => [...db.turnos.filter(t => t.estado !== 'cancelado'), ...db.bloqueos]
-      .filter(o => new Date(o.inicio) < h && new Date(o.fin) > d).map(o => ({ inicio: o.inicio, fin: o.fin }));
+    const ocupados = (d, h, sinId) => [...db.turnos.filter(t => t.estado !== 'cancelado' && t.id !== sinId), ...db.bloqueos.map(b => ({ ...b, barbero_id: null }))]
+      .filter(o => new Date(o.inicio) < h && new Date(o.fin) > d).map(o => ({ inicio: o.inicio, fin: o.fin, barbero_id: o.barbero_id ?? null }));
+    const activos = () => db.barberos.filter(b => b.activo).sort((a, b) => a.orden - b.orden);
     return {
       async servicios() { load(); return db.servicios.filter(s => s.activo).sort((a, b) => a.orden - b.orden); },
       async horarios() { load(); return db.horarios; },
+      async barberos() { load(); return activos(); },
       async ocupados(desde, hasta) { load(); return ocupados(desde, hasta); },
-      async crearTurno({ servicio_id, inicio, nombre, tel, nota }) {
+      async crearTurno({ servicio_id, inicio, nombre, tel, nota, barbero_id }) {
         load();
         const s = db.servicios.find(x => x.id === Number(servicio_id) && x.activo && x.reservable);
         if (!s) throw new Error('Servicio no disponible');
         const i = new Date(inicio), f = new Date(i.getTime() + s.duracion_min * 60000);
-        if (ocupados(i, f).length) throw new Error('Ese horario se acaba de ocupar, elegí otro');
-        const t = { id: 'demo-' + (db.seq++), created_at: new Date().toISOString(), servicio_id: s.id, servicio_nombre: s.nombre, precio: s.precio,
+        const bid = barberoLibre(i, f, ocupados(i, f), barbero_id ? [Number(barbero_id)] : activos().map(b => b.id));
+        if (!bid) throw new Error('Ese horario se acaba de ocupar, elegí otro');
+        const t = { id: 'demo-' + (db.seq++), created_at: new Date().toISOString(), servicio_id: s.id, barbero_id: bid, servicio_nombre: s.nombre, precio: s.precio,
           inicio: i.toISOString(), fin: f.toISOString(), cliente_nombre: nombre.trim(), cliente_tel: tel.trim(), nota: (nota || '').trim() || null, estado: 'pendiente' };
         db.turnos.push(t); save(); listeners.forEach(cb => cb(t));
         return t.id;
@@ -147,6 +162,28 @@
         },
         async horarios() { load(); return db.horarios; },
         async guardarHorario(h) { load(); Object.assign(db.horarios.find(x => x.dia === h.dia), h); save(); },
+        async barberos() { load(); return [...db.barberos].sort((a, b) => a.orden - b.orden); },
+        async guardarBarbero(b) {
+          load();
+          if (b.id) Object.assign(db.barberos.find(x => x.id === b.id), b);
+          else db.barberos.push({ ...b, id: db.seq++, orden: db.barberos.length + 1 });
+          save();
+        },
+        async asignarBarbero(id, barbero_id) {
+          load(); const t = db.turnos.find(x => x.id === id); if (!t) return;
+          const i = new Date(t.inicio), f = new Date(t.fin);
+          if (t.estado !== 'cancelado' && ocupados(i, f, t.id).some(o => String(o.barbero_id) === String(barbero_id)))
+            throw new Error('Ese barbero ya tiene un turno en ese horario');
+          t.barbero_id = Number(barbero_id); save();
+        },
+        async cargarCorte({ servicio_id, barbero_id, inicio, nombre, tel }) {
+          load(); const s = db.servicios.find(x => x.id === Number(servicio_id)); if (!s) throw new Error('Elegí un servicio');
+          const i = new Date(inicio), f = new Date(i.getTime() + s.duracion_min * 60000);
+          if (ocupados(i, f).some(o => String(o.barbero_id) === String(barbero_id))) throw new Error('Ese barbero ya tiene un turno en ese horario');
+          const t = { id: 'demo-' + (db.seq++), created_at: new Date().toISOString(), servicio_id: s.id, barbero_id: Number(barbero_id), servicio_nombre: s.nombre, precio: s.precio,
+            inicio: i.toISOString(), fin: f.toISOString(), cliente_nombre: (nombre || '').trim() || 'Sin turno', cliente_tel: (tel || '').trim() || null, nota: null, estado: 'asistio' };
+          db.turnos.push(t); save(); return t.id;
+        },
         async avisosEnviados() { load(); return db.avisos || {}; },
         async marcarAviso(clave) { load(); db.avisos = db.avisos || {}; db.avisos[clave] = new Date().toISOString(); save(); },
         async reiniciarDemo() { db = seed(); save(); }
@@ -162,9 +199,10 @@
     return {
       async servicios() { return ok(await sb.from('servicios').select('*').eq('activo', true).order('orden')); },
       async horarios() { return ok(await sb.from('horarios').select('*')); },
+      async barberos() { return ok(await sb.from('barberos').select('id,nombre,orden').eq('activo', true).order('orden')); },
       async ocupados(desde, hasta) { return ok(await sb.rpc('horarios_ocupados', { desde: desde.toISOString(), hasta: hasta.toISOString() })); },
-      async crearTurno({ servicio_id, inicio, nombre, tel, nota }) {
-        return ok(await sb.rpc('crear_turno', { p_servicio_id: Number(servicio_id), p_inicio: new Date(inicio).toISOString(), p_nombre: nombre, p_tel: tel, p_nota: nota || null }));
+      async crearTurno({ servicio_id, inicio, nombre, tel, nota, barbero_id }) {
+        return ok(await sb.rpc('crear_turno', { p_servicio_id: Number(servicio_id), p_inicio: new Date(inicio).toISOString(), p_nombre: nombre, p_tel: tel, p_nota: nota || null, p_barbero_id: barbero_id ? Number(barbero_id) : null }));
       },
       async cortesCliente(tel) { return ok(await sb.rpc('cortes_cliente', { p_tel: String(tel) })); },
       auth: {
@@ -187,6 +225,23 @@
         },
         async horarios() { return ok(await sb.from('horarios').select('*').order('dia')); },
         async guardarHorario(h) { ok(await sb.from('horarios').update({ abre: h.abre, cierra: h.cierra }).eq('dia', h.dia)); },
+        async barberos() { return ok(await sb.from('barberos').select('*').order('orden')); },
+        async guardarBarbero(b) {
+          const { id, ...rest } = b;
+          if (id) ok(await sb.from('barberos').update(rest).eq('id', id));
+          else ok(await sb.from('barberos').insert(rest));
+        },
+        async asignarBarbero(id, barbero_id) {
+          const r = await sb.from('turnos').update({ barbero_id: Number(barbero_id) }).eq('id', id);
+          if (r.error) throw new Error(/superposicion|exclusion|conflict/i.test(r.error.message) ? 'Ese barbero ya tiene un turno en ese horario' : r.error.message);
+        },
+        async cargarCorte({ servicio_id, barbero_id, inicio, nombre, tel }) {
+          const s = ok(await sb.from('servicios').select('*').eq('id', Number(servicio_id)).single());
+          const i = new Date(inicio), f = new Date(i.getTime() + s.duracion_min * 60000);
+          const r = await sb.from('turnos').insert({ servicio_id: s.id, barbero_id: Number(barbero_id), servicio_nombre: s.nombre, precio: s.precio,
+            inicio: i.toISOString(), fin: f.toISOString(), cliente_nombre: (nombre || '').trim() || 'Sin turno', cliente_tel: (tel || '').trim() || null, estado: 'asistio' });
+          if (r.error) throw new Error(/superposicion|exclusion|conflict/i.test(r.error.message) ? 'Ese barbero ya tiene un turno en ese horario' : r.error.message);
+        },
         // Los avisos enviados se recuerdan en este dispositivo (no hace falta tabla extra)
         async avisosEnviados() { try { return JSON.parse(localStorage.getItem('avisos-enviados') || '{}'); } catch (e) { return {}; } },
         async marcarAviso(clave) { try { const a = JSON.parse(localStorage.getItem('avisos-enviados') || '{}'); a[clave] = new Date().toISOString(); localStorage.setItem('avisos-enviados', JSON.stringify(a)); } catch (e) {} },
@@ -198,5 +253,5 @@
     };
   }
 
-  window.JSB = { DEMO, T, money, slotsFor, api: DEMO ? demoBackend() : supabaseBackend() };
+  window.JSB = { DEMO, T, money, slotsFor, barberoLibre, api: DEMO ? demoBackend() : supabaseBackend() };
 })();
