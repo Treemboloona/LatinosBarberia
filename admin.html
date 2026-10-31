@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
 <style>
 :root{
-  --bg:#121110; --bg-2:#1B1917; --bg-3:#26221E; --line:#34302B; --text:#F4EDE1; --muted:#A99F92; --gold:#F5B841; --fire:#F2542D; --fire-2:#D9441F; --fd:'Bricolage Grotesque','Arial Black',sans-serif; --fb:'DM Sans',system-ui,sans-serif;
+  --bg:#121110; --bg-2:#1B1917; --bg-3:#26221E; --line:#34302B; --text:#F4EDE1; --muted:#A99F92; --gold:#7CB8EA; --fire:#E0243F; --fire-2:#BE1A33; --fd:'Bricolage Grotesque','Arial Black',sans-serif; --fb:'DM Sans',system-ui,sans-serif;
   --ok:#6fbf8a; --warn:#e0b25a; --bad:#e07a6a; --info:#7fb2e0;
   color-scheme:dark;
 }
@@ -47,7 +47,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .tab{background:none;border:0;border-bottom:2px solid transparent;padding:12px 14px;cursor:pointer;font-family:var(--fb);font-weight:700;font-size:14px;color:var(--muted);white-space:nowrap}
 .tab[aria-selected="true"]{color:var(--text);border-bottom-color:var(--fire)}
 main{padding-block:22px 60px}
-.demo{background:#2A1A14;border:1px solid #4A2A1E;border-radius:14px;color:var(--muted);font-size:13px;padding:8px 12px;margin-bottom:18px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.demo{background:#2A1418;border:1px solid #4A1E26;border-radius:14px;color:var(--muted);font-size:13px;padding:8px 12px;margin-bottom:18px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
 
 /* agenda */
 .daynav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;flex-wrap:wrap}
@@ -58,7 +58,7 @@ main{padding-block:22px 60px}
 .wd span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .wd b{display:block;font-family:var(--fd);font-size:19px;font-weight:800}
 .wd i{display:block;font-style:normal;font-size:12px;color:var(--gold);font-variant-numeric:tabular-nums}
-.wd[aria-pressed="true"]{border-color:var(--fire);background:#2A1A14}
+.wd[aria-pressed="true"]{border-color:var(--fire);background:#2A1418}
 .wd.closed{opacity:.45}
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
 .kpi{border:1px solid var(--line);background:var(--bg-2);border-radius:14px;padding:12px 14px}
@@ -103,8 +103,29 @@ main{padding-block:22px 60px}
 .av b{font-size:16px}.av div div{color:var(--muted);font-size:14px}
 .av.sent{opacity:.55}
 .av .ok{color:var(--ok);font-size:13px;font-weight:700}
-.sello{display:inline-flex;gap:3px;vertical-align:middle}.sello i{width:9px;height:9px;border-radius:50%;border:1px solid var(--muted)}.sello i.on{background:var(--fire);border-color:var(--fire)}
 .hint{margin:0 0 12px;color:var(--muted);font-size:14px}
+.espera{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.espera button{background:var(--bg-3);border:1px solid var(--line);border-radius:14px;padding:14px 8px;cursor:pointer;color:var(--text);font-weight:700;font-size:14px;display:grid;gap:4px;justify-items:center}
+.espera button span{font-size:22px}
+.espera button[aria-pressed="true"]{border-color:var(--fire);background:#2A1418;box-shadow:inset 0 0 0 1px var(--fire)}
+@media (max-width:640px){.espera{grid-template-columns:repeat(2,1fr)}}
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-bottom:16px}
+.filters label{flex:0 1 180px}
+.seg{display:inline-flex;background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+.seg button{background:none;border:0;border-radius:999px;padding:7px 14px;cursor:pointer;color:var(--muted);font-weight:700;font-size:13px}
+.seg button[aria-pressed="true"]{background:var(--fire);color:#fff}
+.bsel{background:var(--bg-3);border:1px solid var(--line);border-radius:999px;padding:3px 8px;font-size:13px;color:var(--text)}
+.bchip{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.bcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:18px}
+.bcard{background:var(--bg-2);border:1px solid var(--line);border-radius:20px;padding:18px}
+.bcard h3{font-size:22px;margin-bottom:12px}
+.bcard .big{font:800 40px/1 var(--fd);color:var(--gold)}
+.bcard .big small{font:500 14px var(--fb);color:var(--muted);margin-left:6px}
+.bcard dl{display:grid;grid-template-columns:1fr auto;gap:6px 10px;margin:14px 0 0;font-size:14px}
+.bcard dt{color:var(--muted)} .bcard dd{margin:0;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.bcard .pay{border-top:1px solid var(--line);padding-top:8px;margin-top:4px;color:var(--text)}
+.dayhead{font:800 15px var(--fd);color:var(--muted);margin:18px 0 8px}
+.walk{border:1px dashed var(--fire)}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--fire);color:#fff;border-radius:14px;padding:12px 16px;font-weight:700;z-index:50;max-width:calc(100% - 32px);box-shadow:0 8px 24px rgba(0,0,0,.5)}
 @media (max-width:640px){
   .turno{grid-template-columns:58px 1fr}
@@ -136,23 +157,13 @@ main{padding-block:22px 60px}
       <button class="btn sm" id="logout" type="button">Salir</button>
     </div>
     <div class="wrap"><nav class="tabs" role="tablist" id="tabs">
-      <button class="tab" role="tab" data-v="agenda" aria-selected="true">Agenda</button>
-      <button class="tab" role="tab" data-v="avisos" aria-selected="false">Avisos <span class="badge" id="avBadge" hidden></span></button>
-      <button class="tab" role="tab" data-v="clientes" aria-selected="false">Clientes</button>
-      <button class="tab" role="tab" data-v="resumen" aria-selected="false">Resumen</button>
-      <button class="tab" role="tab" data-v="bloqueos" aria-selected="false">Bloquear horarios</button>
-      <button class="tab" role="tab" data-v="servicios" aria-selected="false">Servicios</button>
+      <button class="tab" role="tab" data-v="servicios" aria-selected="true">Precios</button>
       <button class="tab" role="tab" data-v="horarios" aria-selected="false">Horarios</button>
     </nav></div>
   </div>
   <main class="wrap">
-    <div class="demo" id="demoBar" hidden><span>Modo demo: los turnos de ejemplo y los que reserves desde la web se guardan en este navegador.</span><button class="btn sm" id="resetDemo" type="button">Reiniciar demo</button></div>
-    <section id="v-agenda"></section>
-    <section id="v-avisos" hidden></section>
-    <section id="v-clientes" hidden></section>
-    <section id="v-resumen" hidden></section>
-    <section id="v-bloqueos" hidden></section>
-    <section id="v-servicios" hidden></section>
+    <div class="demo" id="demoBar" hidden><span>Modo demo: los cambios se guardan en este navegador.</span><button class="btn sm" id="resetDemo" type="button">Reiniciar demo</button></div>
+    <section id="v-servicios"></section>
     <section id="v-horarios" hidden></section>
   </main>
 </div>
@@ -162,26 +173,20 @@ main{padding-block:22px 60px}
 <script src="js/backend.js"></script>
 <script>
 (function(){
-const { api, T, money, DEMO } = window.JSB;
-const C = window.JSB_CONFIG;
-const nombreCorto = n => String(n).replace(/\s*\(ejemplo\)/,'').trim().split(' ')[0];
-const telKey = tel => String(tel).replace(/\D/g,'').slice(-8);
+const { api, DEMO } = window.JSB;
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const ESTADOS = { pendiente:'Pendiente', confirmado:'Confirmado', asistio:'Vino', no_vino:'No vino', cancelado:'Cancelado' };
 const DIAS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
-const waNum = tel => { let d = String(tel).replace(/\D/g,''); if (d.startsWith('549')) return d; if (d.startsWith('54')) d = d.slice(2); if (d.startsWith('0')) d = d.slice(1); d = d.replace(/^(\d{2,4})15/, '$1'); return '549' + d; };
-let view = 'agenda', day = T.today(), horarios = [];
+let view = 'servicios', horarios = [];
 
-function toast(msg){ const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),5000); }
+function toast(msg){ document.querySelectorAll('.toast').forEach(x=>x.remove()); const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),4000); }
 
 // ---------- sesión ----------
 async function boot(){
   const s = await api.auth.session().catch(()=>null);
   if (!s) { $('login').hidden=false; $('app').hidden=true; if (DEMO) $('loginHint').textContent='Modo demo: poné cualquier mail y contraseña.'; return; }
   $('login').hidden=true; $('app').hidden=false; $('demoBar').hidden=!DEMO;
-  horarios = await api.admin.horarios();
-  show(view); contarAvisos();
+  show(view);
 }
 $('loginForm').addEventListener('submit', async e => {
   e.preventDefault(); $('lErr').hidden=true;
@@ -189,177 +194,14 @@ $('loginForm').addEventListener('submit', async e => {
   catch(err){ $('lErr').textContent='Mail o contraseña incorrectos.'; $('lErr').hidden=false; }
 });
 $('logout').onclick = async () => { await api.auth.signOut(); boot(); };
-$('resetDemo').onclick = async () => { await api.admin.reiniciarDemo(); horarios = await api.admin.horarios(); show(view); toast('Demo reiniciada'); };
+$('resetDemo').onclick = async () => { await api.admin.reiniciarDemo(); show(view); toast('Demo reiniciada'); };
 
 $('tabs').addEventListener('click', e => { const b=e.target.closest('.tab'); if(b) show(b.dataset.v); });
 function show(v){
   view=v;
   document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected', t.dataset.v===v));
   document.querySelectorAll('main > section').forEach(s=>s.hidden = s.id!=='v-'+v);
-  ({agenda:renderAgenda, avisos:renderAvisos, clientes:renderClientes, resumen:renderResumen, bloqueos:renderBloqueos, servicios:renderServicios, horarios:renderHorarios})[v]();
-}
-
-// ---------- agenda ----------
-async function renderAgenda(){
-  const el=$('v-agenda');
-  const dow=T.dow(day), lunes=T.addDays(day, -((dow+6)%7));
-  const semana=[...Array(7)].map((_,i)=>T.addDays(lunes,i));
-  const [tSemana, tDia] = await Promise.all([
-    api.admin.turnos(T.at(lunes,'00:00'), T.at(T.addDays(lunes,7),'00:00')),
-    api.admin.turnos(T.at(day,'00:00'), T.at(T.addDays(day,1),'00:00'))
-  ]);
-  const activos = tDia.filter(t=>t.estado!=='cancelado');
-  const esperado = activos.filter(t=>t.estado!=='no_vino').reduce((a,t)=>a+t.precio,0);
-  const cobrado = tDia.filter(t=>t.estado==='asistio').reduce((a,t)=>a+t.precio,0);
-  const titulo = T.long(T.at(day,'12:00'));
-  el.innerHTML = `
-    <div class="daynav"><h2>${day===T.today()?'Hoy · ':''}${esc(titulo)}</h2>
-      <div class="ctrl"><button class="btn sm" data-d="-1" aria-label="Día anterior">‹</button><button class="btn sm" data-d="0">Hoy</button><button class="btn sm" data-d="1" aria-label="Día siguiente">›</button></div></div>
-    <div class="week">${semana.map(d=>{const n=tSemana.filter(t=>t.estado!=='cancelado'&&T.ymd(new Date(t.inicio))===d).length; const h=horarios.find(x=>Number(x.dia)===T.dow(d)); const dd=T.at(d,'12:00');
-      return `<button class="wd${!h||!h.abre?' closed':''}" data-day="${d}" aria-pressed="${d===day}"><span>${esc(T.wd(dd))}</span><b>${d.slice(8)}</b><i>${n?n+' turno'+(n>1?'s':''):'–'}</i></button>`;}).join('')}</div>
-    <div class="kpis"><div class="kpi"><span>Turnos</span><b>${activos.length}</b></div><div class="kpi"><span>Esperado</span><b>${money(esperado)}</b></div><div class="kpi"><span>Cobrado</span><b>${money(cobrado)}</b></div></div>
-    <div class="list">${tDia.length ? tDia.map(turnoHTML).join('') : '<div class="empty">No hay turnos para este día.</div>'}</div>`;
-  contarAvisos();
-  el.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{ const n=Number(b.dataset.d); day = n===0?T.today():T.addDays(day,n); renderAgenda(); });
-  el.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{ day=b.dataset.day; renderAgenda(); });
-  el.querySelectorAll('[data-est]').forEach(b=>b.onclick=async()=>{ await api.admin.estado(b.dataset.id, b.dataset.est); renderAgenda(); });
-}
-function turnoHTML(t){
-  const i=new Date(t.inicio), f=new Date(t.fin);
-  const msg=`Hola ${nombreCorto(t.cliente_nombre)}! Te confirmo tu turno en ${C.NEGOCIO}: ${t.servicio_nombre}, ${T.long(i)} a las ${T.hm(i)} h. Te esperamos en ${C.DIRECCION}.`;
-  const acc=[];
-  if(t.estado==='pendiente') acc.push(['confirmado','Confirmar']);
-  if(['pendiente','confirmado'].includes(t.estado)) acc.push(['asistio','Vino'],['no_vino','No vino'],['cancelado','Cancelar']);
-  if(['asistio','no_vino','cancelado'].includes(t.estado)) acc.push(['pendiente','Deshacer']);
-  return `<div class="turno ${t.estado}">
-    <div class="h">${T.hm(i)}<small>a ${T.hm(f)}</small></div>
-    <div class="who"><b>${esc(t.cliente_nombre)}</b><div>${esc(t.servicio_nombre)} · ${money(t.precio)}</div>
-      <div>Tel: <a href="https://wa.me/${waNum(t.cliente_tel)}" target="_blank" rel="noopener">${esc(t.cliente_tel)}</a></div>
-      ${t.nota?`<div class="nota">“${esc(t.nota)}”</div>`:''}</div>
-    <div class="st"><span class="chip ${t.estado}">${ESTADOS[t.estado]}</span></div>
-    <div class="acts">${acc.map(([e,l])=>`<button class="btn sm" data-id="${esc(t.id)}" data-est="${e}">${l}</button>`).join('')}
-      ${['pendiente','confirmado'].includes(t.estado)?`<a class="btn sm" href="https://wa.me/${waNum(t.cliente_tel)}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">Escribirle</a>`:''}</div>
-  </div>`;
-}
-
-
-// ---------- tarjeta de fidelidad ----------
-function ciclo(n){ return n % (C.FIDELIDAD_CADA+1); }
-function selloHTML(n){ const c=ciclo(n); let h='<span class="sello" title="'+c+' de '+C.FIDELIDAD_CADA+'">'; for(let i=1;i<=C.FIDELIDAD_CADA;i++) h+=`<i class="${i<=c?'on':''}"></i>`; return h+'</span>'+(c===C.FIDELIDAD_CADA?' <b style="color:var(--gold)">Gratis</b>':''); }
-
-// ---------- avisos ----------
-function resumenClientes(all){
-  const map=new Map();
-  all.forEach(t=>{ const k=telKey(t.cliente_tel)||t.cliente_nombre; const c=map.get(k)||{nombre:t.cliente_nombre,tel:t.cliente_tel,vino:0,ultimaVisita:null,proximo:null};
-    if(t.estado==='asistio'){ c.vino++; if(!c.ultimaVisita||t.inicio>c.ultimaVisita){c.ultimaVisita=t.inicio;c.nombre=t.cliente_nombre;} }
-    if(['pendiente','confirmado'].includes(t.estado)&&new Date(t.inicio)>new Date()) c.proximo=t.inicio;
-    map.set(k,c); });
-  return [...map.values()];
-}
-async function contarAvisos(){
-  try{
-    const man=T.addDays(T.today(),1); const env=await api.admin.avisosEnviados();
-    const ts=await api.admin.turnos(T.at(man,'00:00'),T.at(T.addDays(man,1),'00:00'));
-    const n=ts.filter(t=>['pendiente','confirmado'].includes(t.estado)&&!env['rec-'+t.id]).length;
-    $('avBadge').textContent=n; $('avBadge').hidden=!n;
-  }catch(e){}
-}
-async function renderAvisos(){
-  const el=$('v-avisos'); const env=await api.admin.avisosEnviados();
-  const man=T.addDays(T.today(),1);
-  const [tMan, all] = await Promise.all([api.admin.turnos(T.at(man,'00:00'),T.at(T.addDays(man,1),'00:00')), api.admin.todosTurnos()]);
-  const rec=tMan.filter(t=>['pendiente','confirmado'].includes(t.estado));
-  const clientes=resumenClientes(all);
-  const limite=Date.now()-C.DIAS_RECUPERAR*86400000;
-  const perdidos=clientes.filter(c=>c.ultimaVisita&&new Date(c.ultimaVisita).getTime()<limite&&!c.proximo).sort((a,b)=>a.ultimaVisita.localeCompare(b.ultimaVisita));
-  const premios=clientes.filter(c=>c.vino&&ciclo(c.vino)===C.FIDELIDAD_CADA);
-  const casi=clientes.filter(c=>c.vino&&ciclo(c.vino)===C.FIDELIDAD_CADA-1&&!c.proximo);
-  const dMan=T.long(T.at(man,'12:00'));
-  const item=(clave,titulo,detalle,msg,tel)=>{ const sent=env[clave];
-    return `<div class="av${sent?' sent':''}"><div><b>${esc(titulo)}</b><div>${esc(detalle)}</div></div>
-      <div>${sent?`<span class="ok">Enviado ✓</span> `:''}<a class="btn sm${sent?'':' gold'}" data-av="${esc(clave)}" href="https://wa.me/${waNum(tel)}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">${sent?'Reenviar':'Enviar'}</a></div></div>`; };
-  el.innerHTML=`
-   <div class="card"><h3>Recordatorios para mañana</h3>
-    <p class="hint">Un mensajito el día antes baja mucho los que no vienen. Tocá "Enviar" y se abre WhatsApp con el texto listo.</p>
-    <div class="list">${rec.length?rec.map(t=>{const i=new Date(t.inicio);return item('rec-'+t.id,`${T.hm(i)} · ${t.cliente_nombre}`,t.servicio_nombre,
-      `Hola ${nombreCorto(t.cliente_nombre)}! Te recuerdo tu turno de mañana en ${C.NEGOCIO}: ${t.servicio_nombre} a las ${T.hm(i)} h. Si no podés venir avisame así le doy el lugar a otro. Te espero!`,t.cliente_tel);}).join(''):`<div class="empty">No hay turnos para ${esc(dMan)}.</div>`}</div></div>
-
-   <div class="card"><h3>Corte gratis ganado</h3>
-    <p class="hint">Completaron la tarjeta: el próximo corte es de regalo.</p>
-    <div class="list">${premios.length?premios.map(c=>item('pre-'+telKey(c.tel)+'-'+c.vino,c.nombre,`${c.vino} cortes · ${c.tel}`,
-      `Hola ${nombreCorto(c.nombre)}! Completaste tu Tarjeta Latinos: tu próximo corte es gratis. Sacá turno cuando quieras desde la web.`,c.tel)).join(''):'<div class="empty">Nadie completó la tarjeta todavía.</div>'}</div></div>
-
-   <div class="card"><h3>A un corte del gratis</h3>
-    <p class="hint">Les falta uno y no tienen turno sacado. Un empujoncito.</p>
-    <div class="list">${casi.length?casi.map(c=>item('casi-'+telKey(c.tel)+'-'+c.vino,c.nombre,`Último corte: ${T.short(new Date(c.ultimaVisita))}`,
-      `Hola ${nombreCorto(c.nombre)}! Te falta un solo corte para completar tu Tarjeta Latinos y que el siguiente sea gratis. Cuando quieras sacá turno desde la web.`,c.tel)).join(''):'<div class="empty">Nadie por ahora.</div>'}</div></div>
-
-   <div class="card"><h3>Clientes para recuperar</h3>
-    <p class="hint">Hace más de ${C.DIAS_RECUPERAR} días que no vienen y no tienen turno.</p>
-    <div class="list">${perdidos.length?perdidos.map(c=>{const dias=Math.floor((Date.now()-new Date(c.ultimaVisita))/86400000);return item('rec-cli-'+telKey(c.tel)+'-'+T.ymd(new Date(c.ultimaVisita)),c.nombre,`Vino por última vez hace ${dias} días`,
-      `Hola ${nombreCorto(c.nombre)}! Hace rato que no te vemos por ${C.NEGOCIO}. Si querés, esta semana tengo lugares libres, sacá turno desde la web o respondeme acá.`,c.tel);}).join(''):'<div class="empty">Todos tus clientes vinieron hace poco.</div>'}</div></div>`;
-  el.querySelectorAll('[data-av]').forEach(a=>a.addEventListener('click',async()=>{ await api.admin.marcarAviso(a.dataset.av); setTimeout(()=>{renderAvisos();contarAvisos();},400); }));
-}
-
-// ---------- clientes ----------
-async function renderClientes(){
-  const el=$('v-clientes'); const all=await api.admin.todosTurnos();
-  const map=new Map();
-  all.forEach(t=>{ const k=String(t.cliente_tel).replace(/\D/g,'').slice(-8)||t.cliente_nombre; const c=map.get(k)||{nombre:t.cliente_nombre,tel:t.cliente_tel,turnos:0,vino:0,novino:0,gastado:0,ultimo:null};
-    c.turnos++; if(t.estado==='asistio'){c.vino++;c.gastado+=t.precio;} if(t.estado==='no_vino')c.novino++;
-    if(t.estado!=='cancelado'&&(!c.ultimo||t.inicio>c.ultimo)){c.ultimo=t.inicio;c.nombre=t.cliente_nombre;} map.set(k,c);});
-  const rows=[...map.values()].sort((a,b)=>b.vino-a.vino||String(b.ultimo).localeCompare(String(a.ultimo)));
-  el.innerHTML=`<div class="card"><div class="row"><label for="cq">Buscar cliente<input id="cq" type="search" placeholder="Nombre o teléfono"></label></div></div>
-    <div class="scroll"><table class="tbl"><thead><tr><th>Cliente</th><th>Teléfono</th><th>Vino</th><th>Tarjeta</th><th>No vino</th><th>Último turno</th><th>Gastado</th></tr></thead><tbody id="cbody"></tbody></table></div>`;
-  const draw=q=>{ q=q.toLowerCase(); const r=rows.filter(c=>!q||c.nombre.toLowerCase().includes(q)||String(c.tel).includes(q));
-    $('cbody').innerHTML = r.length ? r.map(c=>`<tr><td>${esc(c.nombre)}</td><td><a href="https://wa.me/${waNum(c.tel)}" target="_blank" rel="noopener" style="color:var(--gold)">${esc(c.tel)}</a></td><td>${c.vino}</td><td>${selloHTML(c.vino)}</td><td>${c.novino?`<span style="color:var(--bad)">${c.novino}</span>`:0}</td><td>${c.ultimo?esc(T.short(new Date(c.ultimo))):'–'}</td><td>${money(c.gastado)}</td></tr>`).join('') : '<tr><td colspan="7" class="empty">No hay clientes con esa búsqueda.</td></tr>'; };
-  draw(''); $('cq').oninput=e=>draw(e.target.value);
-}
-
-// ---------- resumen ----------
-async function renderResumen(){
-  const el=$('v-resumen'); const hoy=T.today(); const ym=hoy.slice(0,7);
-  const ini=T.at(ym+'-01','00:00'); const [y,m]=ym.split('-').map(Number); const sig=`${m===12?y+1:y}-${String(m===12?1:m+1).padStart(2,'0')}-01`;
-  const ts=await api.admin.turnos(ini, T.at(sig,'00:00'));
-  const c=e=>ts.filter(t=>t.estado===e).length;
-  const fact=ts.filter(t=>t.estado==='asistio').reduce((a,t)=>a+t.precio,0);
-  const prox=ts.filter(t=>['pendiente','confirmado'].includes(t.estado)).reduce((a,t)=>a+t.precio,0);
-  const porSvc={}; ts.filter(t=>t.estado!=='cancelado').forEach(t=>porSvc[t.servicio_nombre]=(porSvc[t.servicio_nombre]||0)+1);
-  const svcs=Object.entries(porSvc).sort((a,b)=>b[1]-a[1]); const max=svcs[0]?.[1]||1;
-  const mes=new Intl.DateTimeFormat('es-AR',{month:'long',year:'numeric',timeZone:window.JSB_CONFIG.ZONA}).format(T.at(ym+'-15','12:00'));
-  el.innerHTML=`<h2 style="font-size:22px;margin-bottom:14px">Resumen de ${esc(mes)}</h2>
-   <div class="stats">
-    <div class="kpi"><span>Cobrado</span><b>${money(fact)}</b></div>
-    <div class="kpi"><span>Por cobrar (turnos próximos)</span><b>${money(prox)}</b></div>
-    <div class="kpi"><span>Clientes que vinieron</span><b>${c('asistio')}</b></div>
-    <div class="kpi"><span>No vinieron</span><b>${c('no_vino')}</b></div>
-    <div class="kpi"><span>Cancelados</span><b>${c('cancelado')}</b></div>
-    <div class="kpi"><span>Turnos en total</span><b>${ts.length}</b></div>
-   </div>
-   <div class="card"><h3>Servicios más pedidos</h3>${svcs.length?svcs.map(([n,k])=>`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span>${esc(n)}</span><b>${k}</b></div><div class="bar"><i style="width:${Math.round(k/max*100)}%"></i></div></div>`).join(''):'<p class="empty">Todavía no hay turnos este mes.</p>'}</div>`;
-}
-
-// ---------- bloqueos ----------
-async function renderBloqueos(){
-  const el=$('v-bloqueos'); const bs=await api.admin.bloqueos();
-  el.innerHTML=`<div class="card"><h3>Bloquear un día u horario</h3>
-    <p style="margin:0 0 12px;color:var(--muted)">Para francos, feriados o un rato que no vas a atender. Esos horarios no se pueden reservar desde la web.</p>
-    <form class="row" id="bForm" novalidate>
-      <label for="bDia">Día<input id="bDia" type="date" value="${T.today()}" required></label>
-      <label for="bDesde">Desde<input id="bDesde" type="time" value="10:00" step="1800"></label>
-      <label for="bHasta">Hasta<input id="bHasta" type="time" value="13:00" step="1800"></label>
-      <label for="bMot">Motivo<input id="bMot" type="text" placeholder="Ej: franco, trámite"></label>
-      <label class="chk" for="bTodo"><input id="bTodo" type="checkbox"> Todo el día</label>
-      <button class="btn gold" type="submit">Bloquear</button>
-    </form><p class="err" id="bErr" hidden></p></div>
-    <div class="list">${bs.length?bs.map(b=>{const i=new Date(b.inicio),f=new Date(b.fin);return `<div class="turno"><div class="h">${T.hm(i)}<small>a ${T.hm(f)}</small></div><div class="who"><b>${esc(T.long(i))}</b><div>${esc(b.motivo||'Sin motivo')}</div></div><div class="st"><button class="btn sm" data-del="${esc(b.id)}">Quitar</button></div></div>`;}).join(''):'<div class="empty">No hay horarios bloqueados.</div>'}</div>`;
-  $('bTodo').onchange=e=>{$('bDesde').disabled=$('bHasta').disabled=e.target.checked;};
-  $('bForm').onsubmit=async e=>{ e.preventDefault(); const d=$('bDia').value; const todo=$('bTodo').checked;
-    const a=todo?'00:00':$('bDesde').value, z=todo?null:$('bHasta').value;
-    const ini=T.at(d,a), fin=todo?T.at(T.addDays(d,1),'00:00'):T.at(d,z);
-    if(!d||fin<=ini){ $('bErr').textContent='Revisá el día y que "hasta" sea después de "desde".'; $('bErr').hidden=false; return; }
-    await api.admin.bloquear(ini,fin,$('bMot').value.trim()||null); toast('Horario bloqueado'); renderBloqueos(); };
-  el.querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{ await api.admin.desbloquear(isNaN(b.dataset.del)?b.dataset.del:Number(b.dataset.del)); renderBloqueos(); });
+  ({servicios:renderServicios, horarios:renderHorarios})[v]();
 }
 
 // ---------- servicios ----------
@@ -367,14 +209,12 @@ async function renderServicios(){
   const el=$('v-servicios'); const ss=await api.admin.servicios();
   const row=(s,i)=>`<tr data-i="${i}"><td><input type="text" id="sn${i}" value="${esc(s.nombre)}" aria-label="Nombre"></td>
     <td><input type="number" id="sp${i}" value="${s.precio}" min="0" step="500" aria-label="Precio"></td>
-    <td><input type="number" id="sd${i}" value="${s.duracion_min}" min="10" step="10" aria-label="Duración en minutos"></td>
-    <td><label class="chk"><input type="checkbox" id="sr${i}" ${s.reservable?'checked':''}> Online</label></td>
     <td><label class="chk"><input type="checkbox" id="sa${i}" ${s.activo?'checked':''}> Activo</label></td>
     <td><button class="btn sm" data-save="${i}">Guardar</button></td></tr>`;
-  el.innerHTML=`<div class="card"><h3>Servicios y precios</h3><p style="margin:0 0 12px;color:var(--muted)">"Online" = se puede reservar desde la web. La duración define cuánto tiempo ocupa en la agenda.</p>
-    <div class="scroll"><table class="tbl"><thead><tr><th>Servicio</th><th>Precio $</th><th>Minutos</th><th></th><th></th><th></th></tr></thead><tbody>${ss.map(row).join('')}${row({nombre:'',precio:0,duracion_min:40,reservable:true,activo:true},'n')}</tbody></table></div></div>`;
+  el.innerHTML=`<div class="card"><h3>Servicios y precios</h3><p style="margin:0 0 12px;color:var(--muted)">Lo que pongas acá se ve en la web al instante. Destildá "Activo" para ocultar un servicio sin borrarlo.</p>
+    <div class="scroll"><table class="tbl"><thead><tr><th>Servicio</th><th>Precio $</th><th></th><th></th></tr></thead><tbody>${ss.map(row).join('')}${row({nombre:'',precio:0,duracion_min:40,reservable:true,activo:true},'n')}</tbody></table></div></div>`;
   el.querySelectorAll('[data-save]').forEach(b=>b.onclick=async()=>{ const i=b.dataset.save; const base=i==='n'?{categoria:'Cortes'}:ss[i];
-    const s={...base, nombre:$('sn'+i).value.trim(), precio:Number($('sp'+i).value)||0, duracion_min:Number($('sd'+i).value)||40, reservable:$('sr'+i).checked, activo:$('sa'+i).checked};
+    const s={...base, nombre:$('sn'+i).value.trim(), precio:Number($('sp'+i).value)||0, duracion_min:Number(base.duracion_min)||30, activo:$('sa'+i).checked};
     if(!s.nombre){ toast('Poné el nombre del servicio'); return; }
     if(i!=='n'){ s.id=ss[i].id; } delete s.created_at;
     await api.admin.guardarServicio(s); toast('Guardado'); renderServicios(); });
@@ -384,7 +224,7 @@ async function renderServicios(){
 async function renderHorarios(){
   const el=$('v-horarios'); horarios=await api.admin.horarios();
   const orden=[1,2,3,4,5,6,0];
-  el.innerHTML=`<div class="card"><h3>Horario de atención</h3><p style="margin:0 0 12px;color:var(--muted)">Define qué horarios se ofrecen en la web.</p>
+  el.innerHTML=`<div class="card"><h3>Horario de atención</h3><p style="margin:0 0 12px;color:var(--muted)">Se muestran en la web, y con esto la web sabe si estás abierto o cerrado.</p>
    <div class="scroll"><table class="tbl"><tbody>${orden.map(d=>{const h=horarios.find(x=>Number(x.dia)===d)||{}; const ab=h.abre?String(h.abre).slice(0,5):''; const ci=h.cierra?String(h.cierra).slice(0,5):'';
     return `<tr><td>${DIAS[d]}</td><td><label class="chk"><input type="checkbox" id="hc${d}" ${ab?'':'checked'}> Cerrado</label></td><td><input type="time" id="ha${d}" value="${ab||'10:00'}" aria-label="Abre" ${ab?'':'disabled'}></td><td><input type="time" id="hz${d}" value="${ci||'20:00'}" aria-label="Cierra" ${ab?'':'disabled'}></td></tr>`;}).join('')}</tbody></table></div>
    <button class="btn gold" id="hSave" type="button" style="margin-top:12px">Guardar horarios</button></div>`;
@@ -392,11 +232,9 @@ async function renderHorarios(){
   $('hSave').onclick=async()=>{ for(const d of orden){ const c=$('hc'+d).checked; await api.admin.guardarHorario({dia:d, abre:c?null:$('ha'+d).value, cierra:c?null:$('hz'+d).value}); } horarios=await api.admin.horarios(); toast('Horarios guardados'); };
 }
 
-// ---------- aviso en vivo ----------
-api.onNuevoTurno(t=>{ const i=new Date(t.inicio); toast(`Nuevo turno: ${t.cliente_nombre} · ${t.servicio_nombre} · ${T.short(i)} ${T.hm(i)}`); if(!$('app').hidden && (view==='agenda')) renderAgenda(); });
-
 boot();
 })();
 </script>
 </body>
 </html>
+
