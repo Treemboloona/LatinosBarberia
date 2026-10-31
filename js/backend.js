@@ -56,12 +56,11 @@
     const seed = () => {
       const hoy = T.today();
       const servicios = [
-        { id: 1, nombre: 'Corte clásico', categoria: 'Cortes', precio: 15000, duracion_min: 40, nota: 'Tijera y máquina, a tu medida.', reservable: true, activo: true, orden: 1 },
-        { id: 2, nombre: 'Fade / degradé', categoria: 'Cortes', precio: 17000, duracion_min: 45, nota: 'Low, mid o high, con terminación a navaja.', reservable: true, activo: true, orden: 2 },
-        { id: 3, nombre: 'Corte + barba', categoria: 'Cortes', precio: 20000, duracion_min: 60, nota: 'Perfilado con navaja y toalla caliente.', reservable: true, activo: true, orden: 3 },
-        { id: 4, nombre: 'Barba', categoria: 'Barba', precio: 8000, duracion_min: 20, nota: 'Rebaje, perfilado y definición.', reservable: true, activo: true, orden: 4 },
-        { id: 5, nombre: 'Corte niño', categoria: 'Cortes', precio: 12000, duracion_min: 30, nota: 'Hasta 12 años.', reservable: true, activo: true, orden: 5 },
-        { id: 6, nombre: 'Diseño / freestyle', categoria: 'Extras', precio: 3000, duracion_min: 15, nota: 'Líneas y detalles, se suma al corte.', reservable: true, activo: true, orden: 6 }
+        { id: 1, nombre: 'Corte', categoria: 'Cortes', precio: 23000, duracion_min: 40, nota: null, reservable: true, activo: true, orden: 1 },
+        { id: 2, nombre: 'Corte con cejas', categoria: 'Cortes', precio: 25000, duracion_min: 45, nota: null, reservable: true, activo: true, orden: 2 },
+        { id: 3, nombre: 'Corte y barba', categoria: 'Cortes', precio: 30000, duracion_min: 60, nota: null, reservable: true, activo: true, orden: 3 },
+        { id: 4, nombre: 'Barba', categoria: 'Barba', precio: 14000, duracion_min: 20, nota: null, reservable: true, activo: true, orden: 4 },
+        { id: 5, nombre: 'Cejas', categoria: 'Extras', precio: 5000, duracion_min: 10, nota: null, reservable: true, activo: true, orden: 5 }
       ];
       const barberos = [
         { id: 1, nombre: 'Barbero 1', comision: 50, activo: true, orden: 1 },
@@ -95,17 +94,13 @@
         const ymd = T.addDays(hoy, d); turnos.push(mk(abierto(ymd) ? ymd : T.addDays(ymd, 1), '16:00', sid, nom, tel, 'asistio', 2));
       });
       turnos.push(mk(T.addDays(hoy, -3), '19:00', 4, 'Dylan', '297 400-9999', 'no_vino', 2));
-      // Agenda de hoy y mañana
-      const man = abierto(T.addDays(hoy, 1)) ? T.addDays(hoy, 1) : T.addDays(hoy, 2);
+      // Hoy: cortes de gente que vino sin turno (orden de llegada)
       if (abierto(hoy)) {
-        turnos.push(mk(hoy, '11:00', 1, 'Martín', '297 400-1111', 'asistio'));
-        turnos.push(mk(hoy, '15:30', 3, 'Lucas', '297 400-2222', 'confirmado', 2));
-        turnos.push(mk(hoy, '18:00', 2, 'Franco', '297 400-4444', 'pendiente'));
+        turnos.push(mk(hoy, '11:00', 1, 'Martín', '297 400-1111', 'asistio', 1));
+        turnos.push(mk(hoy, '11:20', 3, 'Lucas', '297 400-2222', 'asistio', 2));
+        turnos.push(mk(hoy, '12:10', 2, 'Franco', '297 400-4444', 'asistio', 1));
       }
-      turnos.push(mk(man, '12:00', 2, 'Tomás', '297 400-3333', 'confirmado'));
-      turnos.push(mk(man, '16:30', 3, 'Brian', '297 400-6666', 'pendiente', 2));
-      turnos.push(mk(man, '19:00', 5, 'Nico', '297 400-5555', 'pendiente'));
-      return { barberos, servicios, horarios, turnos, bloqueos: [], avisos: {}, seq: 1000 };
+      return { barberos, servicios, horarios, turnos, bloqueos: [], avisos: {}, estado: { estado: 'poca', actualizado: new Date().toISOString() }, seq: 1000 };
     };
     let db;
     const load = () => { try { db = JSON.parse(localStorage.getItem(KEY)); } catch (e) { db = null; } if (!db || !db.barberos) { db = seed(); save(); } };
@@ -137,10 +132,7 @@
         db.turnos.push(t); save(); listeners.forEach(cb => cb(t));
         return t.id;
       },
-      async cortesCliente(tel) {
-        load(); const k = String(tel).replace(/\D/g, '').slice(-8); if (k.length < 8) return 0;
-        return db.turnos.filter(t => t.estado === 'asistio' && String(t.cliente_tel).replace(/\D/g, '').slice(-8) === k).length;
-      },
+      async estadoLocal() { load(); return db.estado || null; },
       auth: {
         async session() { try { return sessionStorage.getItem('jsb-demo-auth') ? { user: { email: 'demo@barberia' } } : null; } catch (e) { return null; } },
         async signIn() { try { sessionStorage.setItem('jsb-demo-auth', '1'); } catch (e) {} return true; },
@@ -184,6 +176,7 @@
             inicio: i.toISOString(), fin: f.toISOString(), cliente_nombre: (nombre || '').trim() || 'Sin turno', cliente_tel: (tel || '').trim() || null, nota: null, estado: 'asistio' };
           db.turnos.push(t); save(); return t.id;
         },
+        async guardarEstado(estado) { load(); db.estado = { estado, actualizado: new Date().toISOString() }; save(); },
         async avisosEnviados() { load(); return db.avisos || {}; },
         async marcarAviso(clave) { load(); db.avisos = db.avisos || {}; db.avisos[clave] = new Date().toISOString(); save(); },
         async reiniciarDemo() { db = seed(); save(); }
@@ -204,7 +197,7 @@
       async crearTurno({ servicio_id, inicio, nombre, tel, nota, barbero_id }) {
         return ok(await sb.rpc('crear_turno', { p_servicio_id: Number(servicio_id), p_inicio: new Date(inicio).toISOString(), p_nombre: nombre, p_tel: tel, p_nota: nota || null, p_barbero_id: barbero_id ? Number(barbero_id) : null }));
       },
-      async cortesCliente(tel) { return ok(await sb.rpc('cortes_cliente', { p_tel: String(tel) })); },
+      async estadoLocal() { return ok(await sb.from('estado_local').select('estado,actualizado').eq('id', 1).maybeSingle()); },
       auth: {
         async session() { return ok(await sb.auth.getSession()).session; },
         async signIn(email, password) { ok(await sb.auth.signInWithPassword({ email, password })); return true; },
@@ -242,6 +235,7 @@
             inicio: i.toISOString(), fin: f.toISOString(), cliente_nombre: (nombre || '').trim() || 'Sin turno', cliente_tel: (tel || '').trim() || null, estado: 'asistio' });
           if (r.error) throw new Error(/superposicion|exclusion|conflict/i.test(r.error.message) ? 'Ese barbero ya tiene un turno en ese horario' : r.error.message);
         },
+        async guardarEstado(estado) { ok(await sb.from('estado_local').upsert({ id: 1, estado, actualizado: new Date().toISOString() })); },
         // Los avisos enviados se recuerdan en este dispositivo (no hace falta tabla extra)
         async avisosEnviados() { try { return JSON.parse(localStorage.getItem('avisos-enviados') || '{}'); } catch (e) { return {}; } },
         async marcarAviso(clave) { try { const a = JSON.parse(localStorage.getItem('avisos-enviados') || '{}'); a[clave] = new Date().toISOString(); localStorage.setItem('avisos-enviados', JSON.stringify(a)); } catch (e) {} },
