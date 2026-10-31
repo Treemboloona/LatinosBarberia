@@ -77,7 +77,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 @keyframes pulse{50%{box-shadow:0 0 0 8px rgba(61,220,132,0)}}
 .hero-photo .ask{position:absolute;left:16px;right:16px;bottom:16px;z-index:1}
 
-
+/* marquee */
 .mq{background:var(--fire);color:#fff;overflow:hidden;white-space:nowrap;padding:16px 0;transform:rotate(-1.2deg);margin:0 -20px}
 .mq div{display:flex;width:max-content;animation:mq 40s linear infinite;font:800 22px var(--fd);text-transform:uppercase;will-change:transform}
 .mq span{margin:0 22px;flex:none}
@@ -96,13 +96,13 @@ section{padding:104px 0}
 .item h3{font-size:24px;white-space:nowrap}
 .item .lead-dots{flex:1;border-bottom:2px dotted #4A443D;transform:translateY(-6px);min-width:20px}
 .item .price{font:800 26px var(--fd);color:var(--sun);font-variant-numeric:tabular-nums;white-space:nowrap}
-.info{list-style:none;padding:0;margin:18px 0 0;display:flex;gap:10px;flex-wrap:wrap;max-width:760px}
-.info li{background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:14px;color:var(--text);display:inline-flex;gap:8px;align-items:center}
-.info li b{color:var(--sun);font-weight:700}
+.info{margin:26px 0 0;padding-top:16px;border-top:1px dashed var(--line);max-width:760px;font-size:15px;color:var(--muted)}
+.info b{color:var(--text);font-weight:600}
+.info a{color:var(--text)}
 .item p{margin:4px 0 0;color:var(--muted);font-size:14px}
 .note-prices{color:var(--muted);font-size:13px;margin:18px 0 0}
 
-
+/* como */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;counter-reset:s}
 .step{border-top:2px solid var(--line);padding-top:22px}
 .step::before{counter-increment:s;content:"0" counter(s);font:800 54px var(--fd);color:var(--fire);display:block;margin-bottom:8px}
@@ -117,7 +117,7 @@ section{padding:104px 0}
 .g figcaption{position:absolute;left:0;right:0;bottom:0;padding:40px 18px 16px;background:linear-gradient(transparent,rgba(18,17,16,.9));font:800 18px var(--fd)}
 .gal-cta{margin-top:20px;color:var(--muted);font-size:15px}
 
-
+/* donde */
 .where{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .box{background:var(--bg-2);border:1px solid var(--line);border-radius:20px;padding:28px}
 .box h3{font-size:28px;margin-bottom:16px}
@@ -155,7 +155,7 @@ footer a{color:var(--muted)}
 }
 @media (prefers-reduced-motion:reduce){*:not(.mq div){animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
-
+/* equipo */
 .team{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;max-width:760px}
 .barber{background:var(--bg-2);border:1px solid var(--line);border-radius:22px;overflow:hidden}
 .barber .ph{aspect-ratio:1;background:var(--bg-3);display:grid;place-items:center;font:400 72px var(--fs);color:var(--fire)}
@@ -167,13 +167,13 @@ footer a{color:var(--muted)}
 .barber h3{font-size:22px}
 .barber p{margin:4px 0 0;color:var(--muted);font-size:14px}
 .barber a{color:var(--sun);font-size:14px;font-weight:700;text-decoration:none}
-
+/* reseñas */
 .reviews{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:14px}
 .rev{background:var(--bg-2);border:1px solid var(--line);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:12px;margin:0}
 .rev .stars{color:#F6B40E;letter-spacing:2px}
 .rev blockquote{margin:0;font-size:17px;line-height:1.5}
 .rev figcaption{color:var(--muted);font-size:14px}
- 
+/* opiniones / recomendar */
 .grow{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .gcard{background:var(--bg-2);border:1px solid var(--line);border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:12px}
 .gcard .n{font:800 56px/1 var(--fd);color:#F6B40E}
@@ -243,7 +243,7 @@ footer a{color:var(--muted)}
       <div><span class="tag">Servicios y precios</span><h2>Precios</h2></div>
     </div>
     <div class="menu" id="svcs"></div>
-    <ul class="info" id="info"></ul>
+    <p class="info" id="info"></p>
   </div>
 </section>
 
@@ -325,7 +325,7 @@ footer a{color:var(--muted)}
   const DIAS = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
   document.querySelectorAll('[data-jump]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); document.getElementById(a.dataset.jump).scrollIntoView({ behavior: 'smooth' }); }));
 
-
+  // ---- servicios y precios (salen del panel) ----
   api.servicios().then(ss => {
     $('svcs').innerHTML = '';
     ss.forEach(s => {
@@ -370,27 +370,27 @@ footer a{color:var(--muted)}
   }
   pintarAhora(); setInterval(pintarAhora, 60000);
 
-  
-  const info = [['💈', '<b>Sin turno</b>, por orden de llegada']];
-  if (C.CHICOS) info.push(['👦', '<b>Cortamos a chicos</b>']);
-  if (C.PAGOS && C.PAGOS.length) info.push(['💳', 'Pagás con <b>' + C.PAGOS.map(esc).join(', ').replace(/, ([^,]*)$/, ' o $1') + '</b>']);
-  if (C.INSTAGRAM) info.push(['📸', '<a href="https://www.instagram.com/' + esc(C.INSTAGRAM.replace('@', '')) + '/" target="_blank" rel="noopener" style="color:inherit"><b>@' + esc(C.INSTAGRAM.replace('@', '')) + '</b></a>']);
-  $('info').innerHTML = info.map(([i, t]) => `<li><span aria-hidden="true">${i}</span><span>${t}</span></li>`).join('');
+  // ---- datos útiles ----
+  const info = ['<b>Sin turno</b>, se atiende por orden de llegada.'];
+  if (C.CHICOS) info.push('También cortamos a chicos.');
+  if (C.PAGOS && C.PAGOS.length) info.push('Se paga en ' + C.PAGOS.map(esc).join(', ').replace(/, ([^,]*)$/, ' o $1') + '.');
+  if (C.INSTAGRAM) info.push('Los cortes los subimos a <a href="https://www.instagram.com/' + esc(C.INSTAGRAM.replace('@', '')) + '/" target="_blank" rel="noopener">@' + esc(C.INSTAGRAM.replace('@', '')) + '</a>.');
+  $('info').innerHTML = info.join(' ');
 
-  
+  // ---- barberos ----
   if (C.BARBEROS && C.BARBEROS.length) {
     $('team').innerHTML = C.BARBEROS.map(b => `<article class="barber${b.foto ? '' : ' nofoto'}"><div class="ph">${b.foto ? `<img src="${esc(b.foto)}" alt="${esc(b.nombre)}" loading="lazy">` : esc(b.nombre.trim()[0] || '')}</div>
       <div class="tx"><h3>${esc(b.nombre)}</h3>${b.detalle ? `<p>${esc(b.detalle)}</p>` : ''}${b.instagram ? `<p><a href="https://www.instagram.com/${esc(b.instagram.replace('@', ''))}/" target="_blank" rel="noopener">@${esc(b.instagram.replace('@', ''))}</a></p>` : ''}</div></article>`).join('');
     $('equipo').hidden = false;
   }
 
-  
+  // ---- reseñas reales de Google ----
   if (C.RESENAS && C.RESENAS.length) {
     $('reviews').innerHTML = C.RESENAS.map(r => `<figure class="rev"><span class="stars" aria-label="${r.estrellas || 5} de 5">${'★'.repeat(r.estrellas || 5)}</span><blockquote>“${esc(r.texto)}”</blockquote><figcaption>${esc(r.nombre)} · reseña en Google</figcaption></figure>`).join('');
     $('reviews').hidden = false;
   }
 
-  
+  // ---- crecer: compartir, instagram ----
   const url = location.href.split('#')[0];
   $('shareBtn').href = `https://wa.me/?text=${encodeURIComponent('Mirá esta barbería, está buenísima: Barbería Latinos, Lisandro de la Torre 2471. ' + url)}`;
   if (C.INSTAGRAM) { $('igBtn').href = 'https://www.instagram.com/' + C.INSTAGRAM.replace('@', '') + '/'; $('igBtn').hidden = false; }
