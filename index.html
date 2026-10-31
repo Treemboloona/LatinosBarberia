@@ -4,23 +4,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Barbería Latinos · Comodoro Rivadavia</title>
-<meta name="description" content="Barbería Latinos en Av. Lisandro de la Torre 2471, Comodoro Rivadavia. Fade, corte clásico y barba. Sacá tu turno online en un minuto.">
-<meta property="og:title" content="Barbería Latinos · Sacá tu turno online">
-<meta property="og:description" content="Fade, corte clásico y barba en Comodoro Rivadavia. Elegí día y horario y listo.">
+<meta name="description" content="Barbería Latinos en Av. Lisandro de la Torre 2471, Comodoro Rivadavia. Fade, corte clásico y barba por orden de llegada. Lunes a sábado de 11 a 20 h.">
+<meta property="og:title" content="Barbería Latinos · Comodoro Rivadavia">
+<meta property="og:description" content="Fade, corte clásico y barba en Lisandro de la Torre 2471. Sin turno, por orden de llegada.">
+<meta property="og:image" content="https://ssegovia11.github.io/LatinosBarberia/img/fachada.jpg">
 <meta name="theme-color" content="#121110">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%92%88%3C/text%3E%3C/svg%3E">
+<link rel="preload" href="fonts/Whyte-Black.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Yellowtail&family=DM+Sans:wght@400;500;700&display=swap">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BarberShop","name":"Barbería Latinos","telephone":"+54 9 297 526-9763",
  "address":{"@type":"PostalAddress","streetAddress":"Av. Lisandro de la Torre 2471","addressLocality":"Comodoro Rivadavia","addressRegion":"Chubut","addressCountry":"AR"},
- "openingHours":"Mo-Sa 11:00-20:00","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.6","reviewCount":"27"}}
+ "openingHours":"Mo-Sa 11:00-20:00","priceRange":"$$","hasMap":"https://www.google.com/maps/search/?api=1&query=Barber%C3%ADa%20Latinos&query_place_id=ChIJBf92s9BU5L0RvNZc9S2ag2A","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.6","reviewCount":"27"}}
 </script>
 <style>
+@font-face{font-family:'Whyte';font-weight:900;font-display:swap;src:url('fonts/Whyte-Black.woff2') format('woff2'),url('fonts/Whyte-Black.woff') format('woff')}
 :root{
   --bg:#121110; --bg-2:#1B1917; --bg-3:#26221E; --line:#34302B; --text:#F4EDE1; --muted:#A99F92;
-  --fire:#F2542D; --fire-2:#D9441F; --sun:#F5B841; --gold:var(--sun); --cream:#F4EDE1; --ink:#121110;
+  --fire:#E0243F; --fire-2:#BE1A33; --sun:#7CB8EA; --celeste:#7CB8EA; --azul:#1F4E9C; --fs:'Yellowtail',cursive; --gold:var(--sun); --cream:#F4EDE1; --ink:#121110;
   --fd:'Bricolage Grotesque','Arial Black',sans-serif; --fb:'DM Sans',system-ui,sans-serif;
   color-scheme:dark;
 }
@@ -40,11 +43,13 @@ a{color:inherit}
 .tag{display:inline-flex;align-items:center;gap:8px;font:700 12px var(--fb);letter-spacing:.16em;text-transform:uppercase;color:var(--sun)}
 .tag::before{content:"";width:22px;height:2px;background:currentColor}
 .tag.nodash::before{display:none}
+.flags{display:inline-flex;gap:6px;margin-left:12px;vertical-align:middle}
+.flags svg{border-radius:3px;box-shadow:0 0 0 1px rgba(255,255,255,.15)}
 
 /* nav */
-nav{position:sticky;top:0;z-index:20;background:rgba(18,17,16,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav{position:sticky;top:0;z-index:20;background:rgba(18,17,16,.86);backdrop-filter:blur(10px)}
 nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px;gap:16px}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 24px var(--fd);letter-spacing:-.02em}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font:900 24px/1 'Whyte',var(--fd);letter-spacing:-.02em;text-transform:uppercase;color:var(--fire)}
 .logo .pole{flex:none;display:block}
 .nl{display:flex;align-items:center;gap:26px}
 .nl a:not(.btn){text-decoration:none;color:var(--muted);font-size:15px;font-weight:500}
@@ -53,32 +58,30 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 
 /* hero */
 .hero{position:relative;padding:72px 0 88px;overflow:hidden}
-.hero::before{content:"";position:absolute;width:720px;height:720px;right:-220px;top:-260px;border-radius:50%;background:radial-gradient(circle,rgba(242,84,45,.28),transparent 62%);pointer-events:none}
-.hero .wrap{display:grid;grid-template-columns:1.25fr .9fr;gap:56px;align-items:center;position:relative}
-.hero h1{font-size:clamp(56px,9vw,124px);text-transform:uppercase;margin:18px 0 22px}
-.hero h1 em{font-style:normal;color:var(--fire);display:block}
+.hero::before{content:"";position:absolute;width:720px;height:720px;right:-220px;top:-260px;border-radius:50%;background:radial-gradient(circle,rgba(224,36,63,.26),transparent 62%);pointer-events:none}
+.hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:56px;align-items:center;position:relative}
+.hero h1{font-size:clamp(56px,9vw,124px);text-transform:uppercase;margin:18px 0 26px;position:relative}
+.hero h1 em{display:block;font:400 clamp(70px,11vw,150px)/.8 var(--fs);text-transform:none;color:var(--fire);letter-spacing:0;transform:rotate(-6deg);transform-origin:left;margin:-.12em 0 0 .25em;text-shadow:0 0 28px rgba(224,36,63,.45)}
 .hero p.lead{font-size:19px;color:#D9D0C3;max-width:520px;margin:0 0 30px}
 .ctas{display:flex;gap:12px;flex-wrap:wrap}
 .proof{display:flex;gap:28px;margin-top:38px;flex-wrap:wrap}
 .proof div{font-size:14px;color:var(--muted)}
 .proof b{display:block;font:800 26px var(--fd);color:var(--text)}
-.live{background:var(--bg-2);border:1px solid var(--line);border-radius:22px;padding:26px;position:relative;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
-.live .sticker{position:absolute;top:-18px;right:22px;background:var(--sun);color:var(--ink);font:800 14px var(--fd);padding:8px 14px;border-radius:999px;transform:rotate(4deg)}
-.live h3{font-size:22px;margin:4px 0 4px}
-.live .sub{color:var(--muted);font-size:14px;margin:0 0 18px}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3DDC84;margin-right:8px;box-shadow:0 0 0 4px rgba(61,220,132,.18);animation:pulse 2s infinite}
+.hero-photo{position:relative;margin:0;border-radius:26px;overflow:hidden;aspect-ratio:4/5;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(0,0,0,.8);transform:rotate(1.2deg)}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center 12%}
+.hero-photo::after{content:"";position:absolute;inset:auto 0 0;height:45%;background:linear-gradient(transparent,rgba(18,17,16,.85));pointer-events:none}
+.status{position:absolute;bottom:84px;left:16px;z-index:1;display:inline-flex;align-items:center;flex-wrap:wrap;gap:0 6px;background:rgba(18,17,16,.82);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:14px;padding:10px 14px;font:800 16px var(--fd);max-width:min(240px,calc(100% - 32px))}
+.status .sub{flex-basis:100%;font:500 13px var(--fb);color:var(--muted);padding-left:16px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3DDC84;box-shadow:0 0 0 4px rgba(61,220,132,.18);animation:pulse 2s infinite}
+.dot.off{background:var(--muted);box-shadow:none;animation:none}
 @keyframes pulse{50%{box-shadow:0 0 0 8px rgba(61,220,132,0)}}
-.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
-.slots button{background:var(--bg-3);border:1px solid var(--line);color:var(--text);border-radius:12px;padding:12px 0;font:700 18px var(--fd);cursor:pointer;font-variant-numeric:tabular-nums}
-.slots button:hover{border-color:var(--fire);color:var(--fire)}
-.slots .lbl{grid-column:1/-1;font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
-.live .btn{width:100%}
+.hero-photo .ask{position:absolute;left:16px;right:16px;bottom:16px;z-index:1}
 
-/* marquee */
+
 .mq{background:var(--fire);color:#fff;overflow:hidden;white-space:nowrap;padding:16px 0;transform:rotate(-1.2deg);margin:0 -20px}
 .mq div{display:flex;width:max-content;animation:mq 40s linear infinite;font:800 22px var(--fd);text-transform:uppercase;will-change:transform}
 .mq span{margin:0 22px;flex:none}
-.mq span:nth-child(even){color:var(--ink)}
+.mq span:nth-child(even){color:#FFD6DC}
 @keyframes mq{to{transform:translateX(-50%)}}
 
 section{padding:104px 0}
@@ -87,53 +90,34 @@ section{padding:104px 0}
 .head p{color:var(--muted);max-width:380px;margin:0}
 
 /* servicios */
-.svcs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.svc{background:var(--bg-2);border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:10px;min-height:210px;transition:border-color .2s,transform .2s}
-.svc:hover{border-color:var(--fire);transform:translateY(-3px)}
-.svc .top{display:flex;justify-content:space-between;align-items:start;gap:10px}
-.svc h3{font-size:26px}
-.svc .min{font-size:13px;color:var(--muted);white-space:nowrap;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
-.svc p{color:var(--muted);margin:0;font-size:15px;flex:1}
-.svc .bot{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.svc .price{font:800 28px var(--fd);color:var(--sun);font-variant-numeric:tabular-nums}
-.svc button{background:var(--cream);color:var(--ink);border:0;border-radius:999px;padding:10px 16px;font:700 14px var(--fb);cursor:pointer}
-.svc button:hover{background:var(--sun)}
+.menu{max-width:760px;background:var(--bg-2);border:1px solid var(--line);border-radius:22px;padding:8px 28px}
+.item{display:flex;align-items:baseline;gap:14px;padding:18px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border:0}
+.item h3{font-size:24px;white-space:nowrap}
+.item .lead-dots{flex:1;border-bottom:2px dotted #4A443D;transform:translateY(-6px);min-width:20px}
+.item .price{font:800 26px var(--fd);color:var(--sun);font-variant-numeric:tabular-nums;white-space:nowrap}
+.info{list-style:none;padding:0;margin:18px 0 0;display:flex;gap:10px;flex-wrap:wrap;max-width:760px}
+.info li{background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:14px;color:var(--text);display:inline-flex;gap:8px;align-items:center}
+.info li b{color:var(--sun);font-weight:700}
+.item p{margin:4px 0 0;color:var(--muted);font-size:14px}
 .note-prices{color:var(--muted);font-size:13px;margin:18px 0 0}
 
-/* como */
+
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;counter-reset:s}
 .step{border-top:2px solid var(--line);padding-top:22px}
 .step::before{counter-increment:s;content:"0" counter(s);font:800 54px var(--fd);color:var(--fire);display:block;margin-bottom:8px}
 .step h3{font-size:24px;margin-bottom:8px}
 .step p{color:var(--muted);margin:0}
 
-/* fidelidad */
-.fid{background:var(--cream);color:var(--ink);border-radius:32px;margin:0 max(12px,calc((100vw - 1200px)/2));padding:84px 0}
-.fid .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
-.fid .tag{color:var(--fire-2)}
-.fid h2{font-size:clamp(40px,6vw,72px);text-transform:uppercase;margin:14px 0 18px}
-.fid p{color:#4A443D;margin:0 0 22px;font-size:17px}
-.fid form{display:flex;gap:10px;flex-wrap:wrap}
-.fid input{flex:1 1 200px;min-width:0;border:1.5px solid #CFC5B6;background:#fff;border-radius:999px;padding:14px 20px;font:500 16px var(--fb);color:var(--ink)}
-.fid .msg{font-weight:700;margin:14px 0 0;min-height:1.6em}
-.card{background:var(--ink);color:var(--cream);border-radius:24px;padding:30px;aspect-ratio:1.6;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 30px 60px -28px rgba(18,17,16,.6);transform:rotate(-2deg);position:relative;overflow:hidden}
-.card::after{content:"";position:absolute;right:-60px;bottom:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(242,84,45,.45),transparent 65%)}
-.card .ct{display:flex;justify-content:space-between;align-items:center;font:800 22px var(--fd);position:relative;z-index:1}
-.card .ct small{font:500 13px var(--fb);color:var(--muted)}
-.stamps{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;position:relative;z-index:1}
-.stamp{aspect-ratio:1;border-radius:50%;border:2px dashed #4A443D;display:grid;place-items:center;font:800 12px var(--fd);color:#6B635A;transition:all .35s}
-.stamp.on{border:0;background:var(--fire);color:#fff;transform:scale(1.05)}
-.stamp.free{border-color:var(--sun);color:var(--sun);font-size:11px;text-align:center;line-height:1.05}
-.stamp.free.on{background:var(--sun);color:var(--ink)}
-.card .cb{font-size:14px;color:var(--muted);position:relative;z-index:1}
-
 /* galeria */
-.gal{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:220px 220px;gap:12px}
-.g{border-radius:18px;background:linear-gradient(135deg,var(--bg-3),var(--bg-2));border:1px solid var(--line);display:flex;align-items:end;padding:16px;color:var(--muted);font-size:13px}
-.g:first-child{grid-row:span 2}
+.gal{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:860px}
+.g{position:relative;margin:0;border-radius:20px;overflow:hidden;border:1px solid var(--line);aspect-ratio:3/4;background:var(--bg-3)}
+.g img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.g:hover img{transform:scale(1.04)}
+.g figcaption{position:absolute;left:0;right:0;bottom:0;padding:40px 18px 16px;background:linear-gradient(transparent,rgba(18,17,16,.9));font:800 18px var(--fd)}
 .gal-cta{margin-top:20px;color:var(--muted);font-size:15px}
 
-/* donde */
+
 .where{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .box{background:var(--bg-2);border:1px solid var(--line);border-radius:20px;padding:28px}
 .box h3{font-size:28px;margin-bottom:16px}
@@ -153,28 +137,57 @@ footer{border-top:1px solid var(--line);padding:28px 0 36px;color:var(--muted);f
 footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 footer a{color:var(--muted)}
 .wa-float{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom));width:58px;height:58px;border-radius:50%;background:#1FA855;display:grid;place-items:center;box-shadow:0 10px 26px rgba(0,0,0,.45);z-index:15}
-.mobile-cta{display:none}
 
 @media (max-width:900px){
-  .hero .wrap,.fid .wrap,.where{grid-template-columns:1fr}
-  .svcs,.steps{grid-template-columns:1fr 1fr}
+  .hero .wrap,.where{grid-template-columns:1fr}
   .nl a:not(.btn){display:none}
-  .hero{padding:48px 0 64px}
+  .hero{padding:40px 0 64px}
+  .hero-photo{aspect-ratio:4/3.6;transform:none}
+  .hero-photo img{object-position:center 8%}
 }
 @media (max-width:600px){
-  .svcs,.steps{grid-template-columns:1fr}
+  .menu{padding:4px 18px}
+  .item h3{font-size:20px} .item .price{font-size:21px}
   section{padding:76px 0}
-  .fid{padding:60px 0;border-radius:24px;margin:0 10px}
-  .card{padding:22px;transform:none}
-  .stamps{gap:6px}
-  .gal{grid-template-columns:1fr 1fr;grid-template-rows:180px 140px 140px}
-  .g:first-child{grid-column:span 2;grid-row:auto}
+  .gal{gap:10px}
   .proof{gap:20px}
-  .mobile-cta{display:block;position:fixed;left:12px;right:84px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:15}
-  .mobile-cta .btn{width:100%;box-shadow:0 10px 26px rgba(0,0,0,.45)}
-  footer{padding-bottom:100px}
+  footer{padding-bottom:90px}
 }
 @media (prefers-reduced-motion:reduce){*:not(.mq div){animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+
+.team{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;max-width:760px}
+.barber{background:var(--bg-2);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+.barber .ph{aspect-ratio:1;background:var(--bg-3);display:grid;place-items:center;font:400 72px var(--fs);color:var(--fire)}
+.barber .ph img{width:100%;height:100%;object-fit:cover}
+.barber .tx{padding:16px 18px}
+.barber.nofoto{display:flex;align-items:center}
+.barber.nofoto .ph{width:76px;flex:none;border-radius:50%;margin:16px 0 16px 18px;font-size:44px;background:#2A1418;border:1px solid #4A1E26}
+.barber.nofoto h3::after{content:'Barbero';display:block;font:500 14px var(--fb);color:var(--muted);margin-top:4px}
+.barber h3{font-size:22px}
+.barber p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.barber a{color:var(--sun);font-size:14px;font-weight:700;text-decoration:none}
+
+.reviews{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:14px}
+.rev{background:var(--bg-2);border:1px solid var(--line);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:12px;margin:0}
+.rev .stars{color:#F6B40E;letter-spacing:2px}
+.rev blockquote{margin:0;font-size:17px;line-height:1.5}
+.rev figcaption{color:var(--muted);font-size:14px}
+ 
+.grow{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.gcard{background:var(--bg-2);border:1px solid var(--line);border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:12px}
+.gcard .n{font:800 56px/1 var(--fd);color:#F6B40E}
+.gcard .stars{color:#F6B40E;letter-spacing:3px;font-size:18px}
+.gcard h3{font-size:26px}
+.gcard p{color:var(--muted);margin:0;flex:1}
+.gcard .btn{align-self:flex-start}
+.gcard.hot{background:var(--fire);border-color:var(--fire)}
+.gcard.hot p{color:#FFE0E5}
+.gcard.hot .btn{background:var(--ink);color:#fff}
+.open-badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;border-radius:999px;padding:4px 10px;margin-left:8px;vertical-align:middle}
+.open-badge.on{background:rgba(61,220,132,.14);color:#3DDC84}
+.open-badge.off{background:var(--bg-3);color:var(--muted)}
+@media (max-width:900px){ .grow{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
@@ -189,10 +202,10 @@ footer a{color:var(--muted)}
 <rect x="4" y="8" width="10" height="18" fill="url(#ps)" clip-path="url(#pc)"/><rect x="4" y="8" width="10" height="18" rx="2" fill="none" stroke="#E6E8EE" stroke-width=".8"/>
 <rect x="2.5" y="25.4" width="13" height="2.6" rx="1.3" fill="#E6E8EE"/><rect x="5" y="28" width="8" height="3" rx="1" fill="#C9CDD6"/></svg>Latinos</a>
     <div class="nl">
-      <a href="#servicios">Servicios</a>
-      <a href="#tarjeta">Tarjeta Latinos</a>
+      <a href="#servicios">Precios</a>
+      <a href="#opiniones">Opiniones</a>
       <a href="#donde">Dónde estamos</a>
-      <a href="#turno" class="btn" data-turno>Sacar turno</a>
+      <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Barber%C3%ADa%20Latinos&amp;destination_place_id=ChIJBf92s9BU5L0RvNZc9S2ag2A" class="btn" target="_blank" rel="noopener">Cómo llegar</a>
     </div>
   </div>
 </nav>
@@ -200,69 +213,68 @@ footer a{color:var(--muted)}
 <header class="hero">
   <div class="wrap">
     <div>
-      <span class="tag">Comodoro Rivadavia</span>
+      <span class="tag">Estilo latino · Comodoro Rivadavia</span><span class="flags" aria-label="Argentina y República Dominicana"><svg viewBox="0 0 30 20" width="24" height="16" aria-hidden="true"><rect width="30" height="20" fill="#74ACDF"/><rect y="6.67" width="30" height="6.67" fill="#fff"/><circle cx="15" cy="10" r="2.2" fill="#F6B40E"/></svg><svg viewBox="0 0 30 20" width="24" height="16" aria-hidden="true"><rect width="30" height="20" fill="#fff"/><rect width="13" height="8" fill="#002D62"/><rect x="17" width="13" height="8" fill="#CE1126"/><rect y="12" width="13" height="8" fill="#CE1126"/><rect x="17" y="12" width="13" height="8" fill="#002D62"/><circle cx="15" cy="10" r="1.6" fill="#0A7A3E"/></svg></span>
       <h1>Barbería<em>Latinos</em></h1>
-      <p class="lead">Fade, corte clásico y barba en Lisandro de la Torre 2471. Atendemos de lunes a sábado de 11 a 20, sacá tu turno acá o escribinos.</p>
+      <p class="lead">Fade, corte clásico y barba en Lisandro de la Torre 2471. Sin turno: venís y te atendemos por orden de llegada.</p>
       <div class="ctas">
-        <a href="#turno" class="btn" data-turno>Sacar turno online</a>
-        <a href="#servicios" class="btn btn-line">Ver precios</a>
+        <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Barber%C3%ADa%20Latinos&amp;destination_place_id=ChIJBf92s9BU5L0RvNZc9S2ag2A" class="btn" target="_blank" rel="noopener">Cómo llegar</a>
+        <a href="#servicios" class="btn btn-line" data-jump="servicios">Ver precios</a>
       </div>
       <div class="proof">
         <div><b>4,6 ★</b>en Google</div>
         <div><b>Lun a Sáb</b>11 a 20 h</div>
-        <div><b>1 gratis</b>cada 5 cortes</div>
       </div>
     </div>
-    <aside class="live" aria-label="Próximos turnos libres">
-      <span class="sticker">Turnos online</span>
-      <span class="tag" style="color:var(--muted)"><span class="dot" aria-hidden="true"></span>En vivo</span>
-      <h3 id="liveTitle">Próximos turnos libres</h3>
-      <p class="sub" id="liveSub">Buscando horarios…</p>
-      <div class="slots" id="liveSlots"></div>
-      <a href="#turno" class="btn" data-turno>Ver todos los horarios</a>
-    </aside>
+    <figure class="hero-photo">
+      <img src="img/fachada.jpg" alt="Frente de Barbería Latinos, con el cartel y las banderas" width="900" height="1200" fetchpriority="high">
+      <span class="status" id="nowBox" aria-live="polite"><span class="dot" id="nowDot" aria-hidden="true"></span><span id="nowTxt">Abierto</span><span class="sub" id="nowSub"></span></span>
+      <a class="btn ask" id="nowWa" href="https://wa.me/5492975269763" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.7-1.2-4.4-3.9-4.6-4.1-.1-.2-1.1-1.4-1.1-2.7s.7-1.9.9-2.2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>¿Hay lugar? Preguntanos</a>
+    </figure>
   </div>
 </header>
 
 <div class="mq" aria-hidden="true"><div>
-  <span>Fade</span><span>Corte clásico</span><span>Barba</span><span>Freestyle</span><span>Niños</span><span>Latinos</span><span>Fade</span><span>Corte clásico</span><span>Barba</span><span>Freestyle</span><span>Niños</span><span>Latinos</span><span>Fade</span><span>Corte clásico</span><span>Barba</span><span>Freestyle</span><span>Niños</span><span>Latinos</span><span>Fade</span><span>Corte clásico</span><span>Barba</span><span>Freestyle</span><span>Niños</span><span>Latinos</span>
+  <span>Fade</span><span>Estilo latino</span><span>Barba</span><span>Corte clásico</span><span>Cejas</span><span>Latinos</span><span>Fade</span><span>Estilo latino</span><span>Barba</span><span>Corte clásico</span><span>Cejas</span><span>Latinos</span><span>Fade</span><span>Estilo latino</span><span>Barba</span><span>Corte clásico</span><span>Cejas</span><span>Latinos</span><span>Fade</span><span>Estilo latino</span><span>Barba</span><span>Corte clásico</span><span>Cejas</span><span>Latinos</span>
 </div></div>
 
 <section id="servicios">
   <div class="wrap">
     <div class="head">
-      <div><span class="tag">Servicios y precios</span><h2>Elegí tu corte</h2></div>
+      <div><span class="tag">Servicios y precios</span><h2>Precios</h2></div>
     </div>
-    <div class="svcs" id="svcs"></div>
-    <p class="note-prices" id="notePrices" hidden>Precios de ejemplo para la muestra.</p>
-  </div>
-</section>
-
-<section id="tarjeta" class="fid">
-  <div class="wrap">
-    <div>
-      <span class="tag">Tarjeta Latinos</span>
-      <h2>Cada 5 cortes, el próximo va de regalo</h2>
-      <p>No hay cartón que perder. Cada vez que venís se suma solo. Poné tu WhatsApp y fijate cuántos llevás.</p>
-      <form id="fidForm" novalidate>
-        <input id="fidTel" type="tel" inputmode="tel" autocomplete="tel" placeholder="Tu WhatsApp, ej: 297 400-1111" aria-label="Tu WhatsApp">
-        <button class="btn" type="submit">Ver mis sellos</button>
-      </form>
-      <p class="msg" id="fidMsg" aria-live="polite"></p>
-    </div>
-    <div class="card" aria-hidden="true">
-      <div class="ct">Latinos <small>Tarjeta de cliente</small></div>
-      <div class="stamps" id="stamps"></div>
-      <div class="cb" id="cardFoot">5 sellos = 1 corte gratis</div>
-    </div>
+    <div class="menu" id="svcs"></div>
+    <ul class="info" id="info"></ul>
   </div>
 </section>
 
 <section id="trabajos">
   <div class="wrap">
-    <div class="head"><div><span class="tag">Trabajos</span><h2>Nuestros cortes</h2></div><p>Mirá más en nuestro Instagram.</p></div>
+    <div class="head"><div><span class="tag">Trabajos</span><h2>Así trabajamos</h2></div><a class="btn btn-line" id="igBtn" hidden target="_blank" rel="noopener">Seguinos en Instagram</a></div>
     <div class="gal">
-      <div class="g">Foto de corte destacado</div><div class="g">Fade</div><div class="g">Barba</div><div class="g">El local</div><div class="g">Freestyle</div>
+      <figure class="g"><img src="img/corte-diseno.jpg" alt="Corte con degradé y diseño a navaja" loading="lazy" width="570" height="760"><figcaption>Degradé con diseño</figcaption></figure>
+      <figure class="g"><img src="img/puesto.jpg" alt="Puesto de trabajo de la barbería" loading="lazy" width="900" height="1200"><figcaption>Nuestro puesto</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="equipo" style="padding-top:0" hidden>
+  <div class="wrap">
+    <div class="head"><div><span class="tag">El equipo</span><h2>Los barberos</h2></div></div>
+    <div class="team" id="team"></div>
+  </div>
+</section>
+
+<section id="opiniones" style="padding-top:0">
+  <div class="wrap">
+    <div class="head"><div><span class="tag">Lo que dicen</span><h2>Clientes contentos</h2></div></div>
+    <div class="reviews" id="reviews" hidden></div>
+    <div class="grow">
+      <div class="gcard"><span class="n">4,6</span><span class="stars" aria-label="4,6 de 5 estrellas">★★★★<span style="opacity:.35">★</span></span><p>27 reseñas en Google de gente que ya pasó por la silla.</p>
+        <a class="btn btn-line" href="https://www.google.com/maps/search/?api=1&amp;query=Barber%C3%ADa%20Latinos&amp;query_place_id=ChIJBf92s9BU5L0RvNZc9S2ag2A" target="_blank" rel="noopener">Ver reseñas</a></div>
+      <div class="gcard"><h3>¿Te gustó el corte?</h3><p>Dejanos tu opinión en Google. Son 30 segundos y nos ayuda un montón a que más gente nos conozca.</p>
+        <a class="btn" id="reviewBtn" href="https://search.google.com/local/writereview?placeid=ChIJBf92s9BU5L0RvNZc9S2ag2A" target="_blank" rel="noopener">Dejar mi reseña</a></div>
+      <div class="gcard hot"><h3>Recomendanos</h3><p>¿Un amigo anda buscando dónde cortarse? Pasale Latinos por WhatsApp.</p>
+        <a class="btn" id="shareBtn" href="#" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.7-1.2-4.4-3.9-4.6-4.1-.1-.2-1.1-1.4-1.1-2.7s.7-1.9.9-2.2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>Pasarle a un amigo</a></div>
     </div>
   </div>
 </section>
@@ -272,17 +284,17 @@ footer a{color:var(--muted)}
     <div class="head"><div><span class="tag">Dónde estamos</span><h2>Te esperamos</h2></div></div>
     <div class="where">
       <div class="box">
-        <h3>Horarios</h3>
+        <h3>Horarios <span class="open-badge" id="openBadge" hidden></span></h3>
         <div class="hours" id="hours"></div>
       </div>
       <div class="box loc">
         <h3>Av. Lisandro de la Torre 2471</h3>
         <p>Comodoro Rivadavia, Chubut</p>
         <div class="map">
-          <iframe title="Mapa de Barbería Latinos" src="https://www.google.com/maps?q=Barber%C3%ADa+Latinos,+Av.+Lisandro+de+la+Torre+2471,+Comodoro+Rivadavia,+Chubut&z=16&hl=es&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+          <iframe title="Mapa de Barbería Latinos" src="https://www.google.com/maps?q=Barber%C3%ADa+Latinos,+Av.+Lisandro+de+la+Torre+2471,+Comodoro+Rivadavia,+Chubut&amp;z=16&amp;hl=es&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
         </div>
         <div class="acts">
-          <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=Barber%C3%ADa%20Latinos&destination_place_id=ChIJBf92s9BU5L0RvNZc9S2ag2A" target="_blank" rel="noopener">Cómo llegar</a>
+          <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=Barber%C3%ADa%20Latinos&amp;destination_place_id=ChIJBf92s9BU5L0RvNZc9S2ag2A" target="_blank" rel="noopener">Cómo llegar</a>
           <a class="btn btn-line" href="https://wa.me/5492975269763" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.7-1.2-4.4-3.9-4.6-4.1-.1-.2-1.1-1.4-1.1-2.7s.7-1.9.9-2.2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>Escribinos</a>
         </div>
       </div>
@@ -297,7 +309,6 @@ footer a{color:var(--muted)}
   </div>
 </footer>
 
-<div class="mobile-cta"><a href="#turno" class="btn" data-turno>Sacar turno</a></div>
 <a class="wa-float" href="https://wa.me/5492975269763" target="_blank" rel="noopener" aria-label="WhatsApp">
   <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.7-1.2-4.4-3.9-4.6-4.1-.1-.2-1.1-1.4-1.1-2.7s.7-1.9.9-2.2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
 </a>
@@ -305,294 +316,85 @@ footer a{color:var(--muted)}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script src="js/config.js"></script>
 <script src="js/backend.js"></script>
-        <style>
-            /* ---------- Reserva de turnos ---------- */
-            .bk { max-width: 100%; border: 1px solid var(--line); background: var(--bg); color: var(--text); padding: 0; width: min(560px, calc(100% - 24px)); max-height: calc(100% - 24px); }
-            .bk::backdrop { background: rgba(0,0,0,0.72); }
-            .bk-in { display: flex; flex-direction: column; max-height: calc(100vh - 24px); }
-            .bk-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 18px 22px; border-bottom: 1px solid var(--line); }
-            .bk-head h2 { font-size: 22px; }
-            .bk-head h2::after { display: none; }
-            .bk-x { background: none; border: 0; color: var(--muted); font-size: 28px; line-height: 1; cursor: pointer; padding: 4px 8px; }
-            .bk-x:hover { color: var(--gold); }
-            .bk-body { padding: 20px 22px 24px; overflow-y: auto; overflow-x: hidden; display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
-            .bk-step { min-width: 0; }
-            .bk-step h3 { font-size: 14px; color: var(--gold); letter-spacing: 0.12em; margin: 0 0 10px; }
-            .bk-svc { display: grid; gap: 8px; }
-            .bk-opt { display: flex; justify-content: space-between; align-items: center; gap: 12px; width: 100%; text-align: left; background: var(--bg-2); border: 1px solid var(--line); color: var(--text); padding: 12px 14px; cursor: pointer; font: inherit; }
-            .bk-opt .n { font-family: var(--fd); text-transform: uppercase; letter-spacing: 0.04em; font-size: 17px; }
-            .bk-opt small { display: block; color: var(--muted); font-size: 13px; }
-            .bk-opt .p { font-family: var(--fd); font-size: 18px; white-space: nowrap; }
-            .bk-opt[aria-pressed="true"] { border-color: var(--gold); background: var(--bg-3); }
-            .bk-barb { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-            .bk-chip { background: var(--bg-2); border: 1px solid var(--line); color: var(--text); padding: 8px 14px; border-radius: 999px; cursor: pointer; font: 700 14px var(--fb); }
-            .bk-chip[aria-pressed="true"] { background: var(--cream); color: var(--ink); border-color: var(--cream); }
-            .bk-chip:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
-            .bk-days { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
-            .bk-day { flex: 0 0 auto; min-width: 64px; background: var(--bg-2); border: 1px solid var(--line); color: var(--text); padding: 8px 10px; text-align: center; cursor: pointer; font: inherit; }
-            .bk-day b { display: block; font-family: var(--fd); font-size: 20px; font-weight: 500; }
-            .bk-day span { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
-            .bk-day[aria-pressed="true"] { border-color: var(--gold); background: var(--gold); color: #111; }
-            .bk-day[aria-pressed="true"] span { color: #111; }
-            .bk-day:disabled { opacity: 0.35; cursor: default; }
-            .bk-times { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 8px; }
-            .bk-time { background: var(--bg-2); border: 1px solid var(--line); color: var(--text); padding: 9px 0; cursor: pointer; font: 500 16px var(--fd); font-variant-numeric: tabular-nums; }
-            .bk-time[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: #111; }
-            .bk-empty { color: var(--muted); font-size: 15px; margin: 0; }
-            .bk-form { display: grid; gap: 12px; }
-            .bk-form label { display: grid; gap: 4px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
-            .bk-form input { background: var(--bg-2); border: 1px solid var(--line); color: var(--text); padding: 12px; font: 16px var(--fb); }
-            .bk-form input:focus, .bk-opt:focus-visible, .bk-day:focus-visible, .bk-time:focus-visible, .bk-x:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
-            .bk-sum { border: 1px solid var(--gold); padding: 12px 14px; font-size: 15px; }
-            .bk-sum b { color: var(--gold); }
-            .bk-err { color: #ff8a7a; font-size: 14px; margin: 0; }
-            .bk-submit { width: 100%; cursor: pointer; }
-            .bk-submit:disabled { opacity: 0.5; cursor: default; }
-            .bk-ok { text-align: center; display: grid; gap: 14px; padding: 10px 0; }
-            .bk-ok .check { width: 56px; height: 56px; margin: 0 auto; border: 2px solid var(--gold); border-radius: 50%; display: grid; place-items: center; color: var(--gold); font-size: 28px; }
-            .bk-ok h3 { font-size: 24px; color: var(--text); letter-spacing: 0.04em; }
-            .bk-ok p { margin: 0; color: var(--muted); }
-            .bk-demo { font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding: 10px 22px; margin: 0; }
-            @media (max-width: 560px) { .bk { width: 100%; max-width: 100%; max-height: 100%; height: 100%; margin: 0; inset: 0; border: 0; } .bk-in { max-height: 100vh; height: 100%; } .bk-body { flex: 1; } }
-        </style>
-        <dialog class="bk" id="bk" aria-labelledby="bk-title">
-            <div class="bk-in">
-                <div class="bk-head">
-                    <h2 id="bk-title">Sacar turno</h2>
-                    <button class="bk-x" type="button" id="bk-close" aria-label="Cerrar">&times;</button>
-                </div>
-                <div class="bk-body" id="bk-body">
-                    <div class="bk-step">
-                        <h3>1. Servicio</h3>
-                        <div class="bk-svc" id="bk-svc"><p class="bk-empty">Cargando servicios…</p></div>
-                    </div>
-                    <div class="bk-step" id="bk-s2" hidden>
-                        <h3>2. Barbero y día</h3>
-                        <div class="bk-barb" id="bk-barb"></div>
-                        <div class="bk-days" id="bk-days"></div>
-                    </div>
-                    <div class="bk-step" id="bk-s3" hidden>
-                        <h3>3. Horario</h3>
-                        <div class="bk-times" id="bk-times"></div>
-                    </div>
-                    <form class="bk-step bk-form" id="bk-s4" hidden novalidate>
-                        <h3>4. Tus datos</h3>
-                        <div class="bk-sum" id="bk-sum"></div>
-                        <label for="bk-nombre">Nombre<input id="bk-nombre" autocomplete="name" required maxlength="80" placeholder="Ej: Martín"></label>
-                        <label for="bk-tel">WhatsApp<input id="bk-tel" type="tel" inputmode="tel" autocomplete="tel" required maxlength="30" placeholder="Ej: 297 400-1234"></label>
-                        <label for="bk-nota">Comentario (opcional)<input id="bk-nota" maxlength="300" placeholder="Ej: fade bajo con diseño"></label>
-                        <p class="bk-err" id="bk-err" hidden></p>
-                        <button class="btn bk-submit" type="submit" id="bk-submit">Confirmar turno</button>
-                    </form>
-                </div>
-                <p class="bk-demo" id="bk-demo" hidden>Modo demo: los turnos se guardan en este navegador.</p>
-            </div>
-        </dialog>
-                <script>
-        (function () {
-            const { api, T, money, slotsFor, DEMO } = window.JSB;
-            const $ = id => document.getElementById(id);
-            const dlg = $('bk');
-            const st = { svc: null, barb: null, day: null, time: null, servicios: [], horarios: [], barberos: [] };
-            if (DEMO) $('bk-demo').hidden = false;
-
-            function press(container, btn) {
-                container.querySelectorAll('[aria-pressed]').forEach(b => b.setAttribute('aria-pressed', b === btn));
-            }
-
-            async function open(preId, preDay, preTime) {
-                if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
-                try {
-                    [st.servicios, st.horarios, st.barberos] = await Promise.all([api.servicios(), api.horarios(), api.barberos()]);
-                    if (preId) { st.svc = st.servicios.find(s => String(s.id) === String(preId)) || null; }
-                    renderSvc(); if (st.svc) renderDays();
-                    if (st.svc && preDay) { st.day = preDay; renderDays(); await renderTimes(); const tb = [...$('bk-times').querySelectorAll('.bk-time')].find(x => x.textContent === preTime); if (tb) tb.click(); }
-                } catch (e) {
-                    $('bk-svc').innerHTML = `<p class="bk-err">No pudimos cargar los turnos. Escribinos por WhatsApp al ${window.JSB_CONFIG.WHATSAPP_TXT}.</p>`;
-                }
-            }
-
-            function barbNombre() { const b = st.barberos.find(x => String(x.id) === String(st.barb)); return b ? 'con ' + b.nombre : 'con el barbero que esté libre'; }
-
-            function renderSvc() {
-                const box = $('bk-svc'); box.innerHTML = '';
-                st.servicios.filter(s => s.reservable).forEach(s => {
-                    const b = document.createElement('button');
-                    b.type = 'button'; b.className = 'bk-opt'; b.setAttribute('aria-pressed', st.svc && st.svc.id === s.id);
-                    b.innerHTML = '<span><span class="n"></span><small></small></span><span class="p"></span>';
-                    b.querySelector('.n').textContent = s.nombre;
-                    b.querySelector('small').textContent = `${s.duracion_min} min${s.nota ? ' · ' + s.nota : ''}`;
-                    b.querySelector('.p').textContent = money(s.precio);
-                    b.onclick = () => { st.svc = s; st.time = null; press(box, b); renderDays(); };
-                    box.appendChild(b);
-                });
-            }
-
-            function renderDays() {
-                $('bk-s2').hidden = false; $('bk-s3').hidden = true; $('bk-s4').hidden = true;
-                const bb = $('bk-barb'); bb.innerHTML = ''; bb.hidden = st.barberos.length < 2;
-                [{ id: null, nombre: 'Cualquiera' }, ...st.barberos].forEach(x => {
-                    const c = document.createElement('button');
-                    c.type = 'button'; c.className = 'bk-chip'; c.textContent = x.nombre;
-                    c.setAttribute('aria-pressed', String(st.barb) === String(x.id));
-                    c.onclick = () => { st.barb = x.id; st.time = null; press(bb, c); if (st.day) renderTimes(); };
-                    bb.appendChild(c);
-                });
-                const box = $('bk-days'); box.innerHTML = '';
-                let first = null;
-                for (let i = 0; i < window.JSB_CONFIG.DIAS_ADELANTE; i++) {
-                    const ymd = T.addDays(T.today(), i);
-                    const h = st.horarios.find(x => Number(x.dia) === T.dow(ymd));
-                    const abierto = h && h.abre;
-                    const d = T.at(ymd, '12:00');
-                    const b = document.createElement('button');
-                    b.type = 'button'; b.className = 'bk-day'; b.disabled = !abierto;
-                    b.setAttribute('aria-pressed', st.day === ymd);
-                                        b.innerHTML = `<span>${i === 0 ? 'Hoy' : i === 1 ? 'Mañ' : T.wd(d)}</span><b>${ymd.slice(8)}</b><span>${ymd.slice(5, 7)}</span>`;
-                    b.setAttribute('aria-label', T.long(d));
-                    b.onclick = () => { st.day = ymd; st.time = null; press(box, b); renderTimes(); };
-                    box.appendChild(b);
-                    if (abierto && !first) first = b;
-                }
-                if (st.day) renderTimes();
-            }
-
-            async function renderTimes() {
-                $('bk-s3').hidden = false; $('bk-s4').hidden = true;
-                const box = $('bk-times'); box.innerHTML = '<p class="bk-empty">Buscando horarios…</p>';
-                const desde = T.at(st.day, '00:00'), hasta = T.at(T.addDays(st.day, 1), '00:00');
-                let ocup = [];
-                try { ocup = await api.ocupados(desde, hasta); } catch (e) { box.innerHTML = '<p class="bk-err">No pudimos ver los horarios. Probá de nuevo.</p>'; return; }
-                const libres = slotsFor(st.day, st.svc.duracion_min, st.horarios, ocup, st.barberos, st.barb);
-                box.innerHTML = '';
-                if (!libres.length) { box.innerHTML = '<p class="bk-empty">No quedan horarios para este día. Probá con otro.</p>'; return; }
-                libres.forEach(hm => {
-                    const b = document.createElement('button');
-                    b.type = 'button'; b.className = 'bk-time'; b.textContent = hm; b.setAttribute('aria-pressed', st.time === hm);
-                    b.onclick = () => { st.time = hm; press(box, b); renderForm(); };
-                    box.appendChild(b);
-                });
-            }
-
-            function renderForm() {
-                const f = $('bk-s4'); f.hidden = false; $('bk-err').hidden = true;
-                const d = T.at(st.day, st.time);
-                $('bk-sum').innerHTML = `<b></b><br><span></span>`;
-                $('bk-sum').querySelector('b').textContent = `${st.svc.nombre} · ${money(st.svc.precio)}`;
-                $('bk-sum').querySelector('span').textContent = `${T.long(d)} a las ${st.time} h · ${barbNombre()}`;
-                f.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                $('bk-nombre').focus({ preventScroll: true });
-            }
-
-            $('bk-s4').addEventListener('submit', async ev => {
-                ev.preventDefault();
-                const nombre = $('bk-nombre').value.trim(), tel = $('bk-tel').value.trim();
-                const err = $('bk-err');
-                if (nombre.length < 2) { err.textContent = 'Poné tu nombre.'; err.hidden = false; return; }
-                if (tel.replace(/\D/g, '').length < 8) { err.textContent = 'Poné un WhatsApp válido, con código de área.'; err.hidden = false; return; }
-                const btn = $('bk-submit'); btn.disabled = true; btn.textContent = 'Reservando…';
-                try {
-                    await api.crearTurno({ servicio_id: st.svc.id, inicio: T.at(st.day, st.time), nombre, tel, nota: $('bk-nota').value, barbero_id: st.barb });
-                    showOk(nombre);
-                } catch (e) {
-                    err.textContent = e.message || 'No se pudo reservar. Probá con otro horario.'; err.hidden = false;
-                    renderTimes();
-                } finally { btn.disabled = false; btn.textContent = 'Confirmar turno'; }
-            });
-
-            function showOk(nombre) {
-                const d = T.at(st.day, st.time);
-                const resumen = `${st.svc.nombre}, ${T.long(d)} a las ${st.time} h ${barbNombre()}`;
-                $('bk-body').innerHTML = `<div class="bk-ok"><div class="check" aria-hidden="true">✓</div><h3>Turno reservado</h3><p></p><p>${window.JSB_CONFIG.DIRECCION}, Comodoro Rivadavia. Si no podés venir, avisanos por WhatsApp al ${window.JSB_CONFIG.WHATSAPP_TXT}.</p><p>Cuando vengas, sumás un sello en tu Tarjeta Latinos.</p><button class="btn btn-line" type="button" id="bk-done">Listo</button></div>`;
-                $('bk-body').querySelector('.bk-ok p').textContent = `Gracias ${nombre}. Te esperamos: ${resumen}.`;
-                $('bk-done').onclick = () => { location.hash = ''; location.reload(); };
-            }
-
-            $('bk-close').onclick = () => dlg.close();
-            dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
-            document.addEventListener('click', e => { const a = e.target.closest('[data-turno]'); if (!a) return; e.preventDefault(); open(a.dataset.svc, a.dataset.day, a.dataset.time); });
-            window.abrirTurno = open;
-            if (location.hash === '#turno') open();
-        })();
-        </script>
-
 <script>
 (function () {
-  const { api, T, money, slotsFor, DEMO } = window.JSB;
+  const { api, T, money, DEMO } = window.JSB;
   const C = window.JSB_CONFIG;
   const $ = id => document.getElementById(id);
+  const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const DIAS = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-  if (DEMO) $('notePrices').hidden = false;
+  document.querySelectorAll('[data-jump]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); document.getElementById(a.dataset.jump).scrollIntoView({ behavior: 'smooth' }); }));
 
-  // ---- servicios con precio (salen del sistema: si el barbero cambia un precio, se actualiza solo) ----
+
   api.servicios().then(ss => {
     $('svcs').innerHTML = '';
     ss.forEach(s => {
-      const el = document.createElement('article'); el.className = 'svc';
-      el.innerHTML = '<div class="top"><h3></h3><span class="min"></span></div><p></p><div class="bot"><span class="price"></span><button type="button" data-turno>Reservar</button></div>';
+      const el = document.createElement('div'); el.className = 'item';
+      el.innerHTML = '<h3></h3><span class="lead-dots" aria-hidden="true"></span><span class="price"></span>';
       el.querySelector('h3').textContent = s.nombre;
-      el.querySelector('.min').textContent = s.duracion_min + ' min';
-      el.querySelector('p').textContent = s.nota || '';
       el.querySelector('.price').textContent = money(s.precio);
-      const b = el.querySelector('button');
-      if (s.reservable) b.dataset.svc = s.id; else { b.removeAttribute('data-turno'); b.textContent = 'Consultar'; b.onclick = () => window.open(`https://wa.me/${C.WHATSAPP}?text=${encodeURIComponent('Hola! Quería consultar por ' + s.nombre)}`, '_blank'); }
       $('svcs').appendChild(el);
     });
   }).catch(() => { $('svcs').innerHTML = '<p class="note-prices">Escribinos por WhatsApp para ver precios.</p>'; });
 
-  // ---- horarios + próximos turnos libres en vivo ----
-  api.horarios().then(async hs => {
-    const hoyDow = T.dow(T.today());
-    $('hours').innerHTML = [1, 2, 3, 4, 5, 6, 0].map(d => {
-      const h = hs.find(x => Number(x.dia) === d);
-      const txt = h && h.abre ? `${String(h.abre).slice(0, 5)} a ${String(h.cierra).slice(0, 5)}` : 'Cerrado';
-      return `<div class="${d === hoyDow ? 'today' : ''}"><span>${DIAS[d]}${d === hoyDow ? ' · hoy' : ''}</span><span>${txt}</span></div>`;
-    }).join('');
-
-    const [ss, bs] = await Promise.all([api.servicios(), api.barberos()]);
-    const base = ss.find(s => s.reservable);
-    if (!base) return;
-    for (let i = 0; i < 7; i++) {
-      const ymd = T.addDays(T.today(), i);
-      const oc = await api.ocupados(T.at(ymd, '00:00'), T.at(T.addDays(ymd, 1), '00:00'));
-      const libres = slotsFor(ymd, base.duracion_min, hs, oc, bs);
-      if (!libres.length) continue;
-      const d = T.at(ymd, '12:00');
-      const cuando = i === 0 ? 'Hoy' : i === 1 ? 'Mañana' : T.long(d).replace(/^./, c => c.toUpperCase());
-      $('liveSub').textContent = `${cuando} quedan ${libres.length} horario${libres.length > 1 ? 's' : ''} libre${libres.length > 1 ? 's' : ''}.`;
-      $('liveSlots').innerHTML = `<span class="lbl">${cuando}</span>` + libres.slice(0, 6).map(h => `<button type="button" data-turno data-svc="${base.id}" data-day="${ymd}" data-time="${h}">${h}</button>`).join('');
-      return;
-    }
-    $('liveSub').textContent = 'Esta semana está completa. Escribinos y te avisamos si se libera un lugar.';
-  }).catch(() => { $('liveSub').textContent = 'Reservá tu turno online o escribinos por WhatsApp.'; });
-
-  // ---- Tarjeta Latinos ----
-  const CADA = C.FIDELIDAD_CADA;
-  function pintar(n) {
-    const enCiclo = n % (CADA + 1);
-    let html = '';
-    for (let i = 1; i <= CADA; i++) html += `<span class="stamp${i <= enCiclo ? ' on' : ''}">${i <= enCiclo ? '✓' : i}</span>`;
-    html += `<span class="stamp free${enCiclo === CADA ? ' on' : ''}">GRA<br>TIS</span>`;
-    $('stamps').innerHTML = html;
-    return enCiclo;
+  // ---- abierto ahora + espera que carga el barbero ----
+  function abiertoAhora(hs) {
+    const hoy = T.today(), h = hs.find(x => Number(x.dia) === T.dow(hoy));
+    if (!h || !h.abre) return { abierto: false, h };
+    const now = T.toMin(T.hm(new Date())), a = T.toMin(String(h.abre).slice(0, 5)), c = T.toMin(String(h.cierra).slice(0, 5));
+    return { abierto: now >= a && now < c, h, antes: now < a };
   }
-  pintar(0);
-  $('fidForm').addEventListener('submit', async e => {
-    e.preventDefault();
-    const tel = $('fidTel').value;
-    if (tel.replace(/\D/g, '').length < 8) { $('fidMsg').textContent = 'Poné tu WhatsApp con característica, ej: 297 400-1111.'; return; }
-    $('fidMsg').textContent = 'Buscando…';
+  function proximaApertura(hs) {
+    for (let i = 1; i <= 7; i++) { const d = T.addDays(T.today(), i), h = hs.find(x => Number(x.dia) === T.dow(d));
+      if (h && h.abre) return `${i === 1 ? 'mañana' : DIAS[T.dow(d)].toLowerCase()} a las ${String(h.abre).slice(0, 5)}`; }
+    return '';
+  }
+  async function pintarAhora() {
     try {
-      const n = await api.cortesCliente(tel);
-      const c = pintar(n);
-      if (!n) $('fidMsg').textContent = 'Todavía no tenés sellos. Con tu primer turno arrancás.';
-      else if (c === 0) $('fidMsg').textContent = 'Ya usaste tu corte gratis y arrancaste una tarjeta nueva. ¡Vamos por otro!';
-      else if (c === CADA) $('fidMsg').textContent = '¡Tu próximo corte es gratis! Reservá y avisá en el local.';
-      else $('fidMsg').textContent = `Llevás ${c} de ${CADA}. Te faltan ${CADA - c} para el corte gratis.`;
-      $('cardFoot').textContent = `${n} corte${n === 1 ? '' : 's'} en Latinos`;
-    } catch (err) { $('fidMsg').textContent = 'No pudimos buscar tus sellos. Probá de nuevo.'; }
-  });
-  if (DEMO) $('fidTel').placeholder = 'Probá con 297 400-2222';
+      const hs = await api.horarios();
+      const ab = abiertoAhora(hs);
+      const e = ab.abierto
+        ? { txt: 'Abierto ahora', sub: `Hasta las ${String(ab.h.cierra).slice(0, 5)}`, ico: '💈', k: 'sin' }
+        : { txt: 'Cerrado ahora', sub: ab.antes ? `Abrimos hoy a las ${String(ab.h.abre).slice(0, 5)}.` : `Abrimos ${proximaApertura(hs)}.`, ico: '🌙', k: 'cerrado' };
+      $('nowTxt').textContent = e.txt; $('nowSub').textContent = e.sub;
+      $('nowDot').className = 'dot' + (ab.abierto && e.k !== 'cerrado' ? '' : ' off');
+      $('nowWa').href = `https://wa.me/${C.WHATSAPP}?text=${encodeURIComponent('Hola! ¿Hay mucha espera ahora?')}`;
+      const ob = $('openBadge'); ob.hidden = false; ob.className = 'open-badge ' + (ab.abierto ? 'on' : 'off'); ob.textContent = ab.abierto ? 'Abierto ahora' : 'Cerrado ahora';
+      const hoyDow = T.dow(T.today());
+      $('hours').innerHTML = [1, 2, 3, 4, 5, 6, 0].map(d => {
+        const h = hs.find(x => Number(x.dia) === d);
+        const txt = h && h.abre ? `${String(h.abre).slice(0, 5)} a ${String(h.cierra).slice(0, 5)}` : 'Cerrado';
+        return `<div class="${d === hoyDow ? 'today' : ''}"><span>${DIAS[d]}${d === hoyDow ? ' · hoy' : ''}</span><span>${txt}</span></div>`;
+      }).join('');
+    } catch (err) { $('nowTxt').textContent = 'Lun a Sáb'; $('nowSub').textContent = '11 a 20 h'; }
+  }
+  pintarAhora(); setInterval(pintarAhora, 60000);
+
+  
+  const info = [['💈', '<b>Sin turno</b>, por orden de llegada']];
+  if (C.CHICOS) info.push(['👦', '<b>Cortamos a chicos</b>']);
+  if (C.PAGOS && C.PAGOS.length) info.push(['💳', 'Pagás con <b>' + C.PAGOS.map(esc).join(', ').replace(/, ([^,]*)$/, ' o $1') + '</b>']);
+  if (C.INSTAGRAM) info.push(['📸', '<a href="https://www.instagram.com/' + esc(C.INSTAGRAM.replace('@', '')) + '/" target="_blank" rel="noopener" style="color:inherit"><b>@' + esc(C.INSTAGRAM.replace('@', '')) + '</b></a>']);
+  $('info').innerHTML = info.map(([i, t]) => `<li><span aria-hidden="true">${i}</span><span>${t}</span></li>`).join('');
+
+  
+  if (C.BARBEROS && C.BARBEROS.length) {
+    $('team').innerHTML = C.BARBEROS.map(b => `<article class="barber${b.foto ? '' : ' nofoto'}"><div class="ph">${b.foto ? `<img src="${esc(b.foto)}" alt="${esc(b.nombre)}" loading="lazy">` : esc(b.nombre.trim()[0] || '')}</div>
+      <div class="tx"><h3>${esc(b.nombre)}</h3>${b.detalle ? `<p>${esc(b.detalle)}</p>` : ''}${b.instagram ? `<p><a href="https://www.instagram.com/${esc(b.instagram.replace('@', ''))}/" target="_blank" rel="noopener">@${esc(b.instagram.replace('@', ''))}</a></p>` : ''}</div></article>`).join('');
+    $('equipo').hidden = false;
+  }
+
+  
+  if (C.RESENAS && C.RESENAS.length) {
+    $('reviews').innerHTML = C.RESENAS.map(r => `<figure class="rev"><span class="stars" aria-label="${r.estrellas || 5} de 5">${'★'.repeat(r.estrellas || 5)}</span><blockquote>“${esc(r.texto)}”</blockquote><figcaption>${esc(r.nombre)} · reseña en Google</figcaption></figure>`).join('');
+    $('reviews').hidden = false;
+  }
+
+  
+  const url = location.href.split('#')[0];
+  $('shareBtn').href = `https://wa.me/?text=${encodeURIComponent('Mirá esta barbería, está buenísima: Barbería Latinos, Lisandro de la Torre 2471. ' + url)}`;
+  if (C.INSTAGRAM) { $('igBtn').href = 'https://www.instagram.com/' + C.INSTAGRAM.replace('@', '') + '/'; $('igBtn').hidden = false; }
+
 })();
 </script>
 </body>
